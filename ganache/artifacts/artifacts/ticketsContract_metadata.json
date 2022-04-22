@@ -1,0 +1,115 @@
+{
+	"compiler": {
+		"version": "0.8.6+commit.11564f7e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_folio",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_department",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_incident",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_incident_address",
+						"type": "string"
+					}
+				],
+				"name": "addTicket",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_folio",
+						"type": "uint256"
+					}
+				],
+				"name": "getTicket",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "folio",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "incident",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "department",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "incident_address",
+								"type": "string"
+							}
+						],
+						"internalType": "struct ticketsContract.Ticket",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"ganache/artifacts/ticketsContract.sol": "ticketsContract"
+		},
+		"evmVersion": "berlin",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ganache/artifacts/ticketsContract.sol": {
+			"keccak256": "0x4567643656f875fa4e4bb72e34fbe40526d0c0dce9367c5aef16fce8ef461963",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9fe442d3faf80d574ff3b66f21b12aadd171acddd2e6fb50f551436ace4dd0c2",
+				"dweb:/ipfs/QmNbvv8yN3obv5C6jkSBggMaGvX6LRXpjFbo9hYhJqiSkf"
+			]
+		}
+	},
+	"version": 1
+}

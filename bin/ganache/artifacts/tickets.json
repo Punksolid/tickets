@@ -1,0 +1,408 @@
+{
+    "contractName": "tickets",
+    "abi": [
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256[]",
+                    "name": "_ticket",
+                    "type": "uint256[]"
+                }
+            ],
+            "name": "addTicket",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getNumTickets",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ],
+    "metadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"_ticket\",\"type\":\"uint256[]\"}],\"name\":\"addTicket\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getNumTickets\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/jpalazuelos/projects/tickets/ganache/artifacts/reportes.sol\":\"tickets\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/jpalazuelos/projects/tickets/ganache/artifacts/reportes.sol\":{\"keccak256\":\"0x4285db4045d4d5a989d11ae299b1acba7f25e8ea9e244113573dacbe85ca1fd6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://81a0ce1d8c3b08e31c4bf63afa3e672c91b3ca89c99373ecf8f6c6d70b78bd7f\",\"dweb:/ipfs/QmaPxCGnZns3SanRdSD4KcN6b6civEi6n1fbE4sWDo5uwf\"]}},\"version\":1}",
+    "bytecode": "608060405234801561001057600080fd5b50610234806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c80630b5adfff1461003b578063d7a70d7514610050575b600080fd5b60005460405190815260200160405180910390f35b61006361005e36600461012a565b610065565b005b8060008260008151811061007b5761007b6101e8565b602002602001015181548110610093576100936101e8565b9060005260206000200190805190602001906100b09291906100b4565b5050565b8280548282559060005260206000209081019282156100ef579160200282015b828111156100ef5782518255916020019190600101906100d4565b506100fb9291506100ff565b5090565b5b808211156100fb5760008155600101610100565b634e487b7160e01b600052604160045260246000fd5b6000602080838503121561013d57600080fd5b823567ffffffffffffffff8082111561015557600080fd5b818501915085601f83011261016957600080fd5b81358181111561017b5761017b610114565b8060051b604051601f19603f830116810181811085821117156101a0576101a0610114565b6040529182528482019250838101850191888311156101be57600080fd5b938501935b828510156101dc578435845293850193928501926101c3565b98975050505050505050565b634e487b7160e01b600052603260045260246000fdfea26469706673582212206266babf4c4c3fd94790f1d4fdd03762f728aecc6b31e44d0645178168578a3864736f6c634300080d0033",
+    "deployedBytecode": "608060405234801561001057600080fd5b50600436106100365760003560e01c80630b5adfff1461003b578063d7a70d7514610050575b600080fd5b60005460405190815260200160405180910390f35b61006361005e36600461012a565b610065565b005b8060008260008151811061007b5761007b6101e8565b602002602001015181548110610093576100936101e8565b9060005260206000200190805190602001906100b09291906100b4565b5050565b8280548282559060005260206000209081019282156100ef579160200282015b828111156100ef5782518255916020019190600101906100d4565b506100fb9291506100ff565b5090565b5b808211156100fb5760008155600101610100565b634e487b7160e01b600052604160045260246000fd5b6000602080838503121561013d57600080fd5b823567ffffffffffffffff8082111561015557600080fd5b818501915085601f83011261016957600080fd5b81358181111561017b5761017b610114565b8060051b604051601f19603f830116810181811085821117156101a0576101a0610114565b6040529182528482019250838101850191888311156101be57600080fd5b938501935b828510156101dc578435845293850193928501926101c3565b98975050505050505050565b634e487b7160e01b600052603260045260246000fdfea26469706673582212206266babf4c4c3fd94790f1d4fdd03762f728aecc6b31e44d0645178168578a3864736f6c634300080d0033",
+    "sourceMap": "58:491:0:-:0;;;;;;;;;;;;;;;;;;;",
+    "deployedSourceMap": "58:491:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;412:133;458:7;524:14;412:133;;160:25:1;;;148:2;133:18;412:133:0;;;;;;;180:167;;;;;;:::i;:::-;;:::i;:::-;;;324:7;302;310;318:1;310:10;;;;;;;;:::i;:::-;;;;;;;302:19;;;;;;;;:::i;:::-;;;;;;;;:29;;;;;;;;;;;;:::i;:::-;;180:167;:::o;-1:-1:-1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;196:127:1;257:10;252:3;248:20;245:1;238:31;288:4;285:1;278:15;312:4;309:1;302:15;328:1115;412:6;443:2;486;474:9;465:7;461:23;457:32;454:52;;;502:1;499;492:12;454:52;542:9;529:23;571:18;612:2;604:6;601:14;598:34;;;628:1;625;618:12;598:34;666:6;655:9;651:22;641:32;;711:7;704:4;700:2;696:13;692:27;682:55;;733:1;730;723:12;682:55;769:2;756:16;791:2;787;784:10;781:36;;;797:18;;:::i;:::-;843:2;840:1;836:10;875:2;869:9;938:2;934:7;929:2;925;921:11;917:25;909:6;905:38;993:6;981:10;978:22;973:2;961:10;958:18;955:46;952:72;;;1004:18;;:::i;:::-;1040:2;1033:22;1090:18;;;1124:15;;;;-1:-1:-1;1166:11:1;;;1162:20;;;1194:19;;;1191:39;;;1226:1;1223;1216:12;1191:39;1250:11;;;;1270:142;1286:6;1281:3;1278:15;1270:142;;;1352:17;;1340:30;;1303:12;;;;1390;;;;1270:142;;;1431:6;328:1115;-1:-1:-1;;;;;;;;328:1115:1:o;1448:127::-;1509:10;1504:3;1500:20;1497:1;1490:31;1540:4;1537:1;1530:15;1564:4;1561:1;1554:15",
+    "sourcePath": "/home/jpalazuelos/projects/tickets/ganache/artifacts/reportes.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.8.13+commit.abaa5c0e"
+    },
+    "ast": {
+        "absolutePath": "/home/jpalazuelos/projects/tickets/ganache/artifacts/reportes.sol",
+        "exportedSymbols": {
+            "tickets": [
+                30
+            ]
+        },
+        "id": 31,
+        "license": "MIT",
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 1,
+                "literals": [
+                    "solidity",
+                    "^",
+                    "0.8",
+                    ".0"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "33:23:0"
+            },
+            {
+                "abstract": false,
+                "baseContracts": [],
+                "canonicalName": "tickets",
+                "contractDependencies": [],
+                "contractKind": "contract",
+                "fullyImplemented": true,
+                "id": 30,
+                "linearizedBaseContracts": [
+                    30
+                ],
+                "name": "tickets",
+                "nameLocation": "67:7:0",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "constant": false,
+                        "id": 5,
+                        "mutability": "mutable",
+                        "name": "tickets",
+                        "nameLocation": "124:7:0",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 30,
+                        "src": "115:16:0",
+                        "stateVariable": true,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_array$_t_array$_t_uint256_$dyn_storage_$dyn_storage",
+                            "typeString": "uint256[][]"
+                        },
+                        "typeName": {
+                            "baseType": {
+                                "baseType": {
+                                    "id": 2,
+                                    "name": "uint",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "115:4:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    }
+                                },
+                                "id": 3,
+                                "nodeType": "ArrayTypeName",
+                                "src": "115:6:0",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                                    "typeString": "uint256[]"
+                                }
+                            },
+                            "id": 4,
+                            "nodeType": "ArrayTypeName",
+                            "src": "115:8:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_array$_t_array$_t_uint256_$dyn_storage_$dyn_storage_ptr",
+                                "typeString": "uint256[][]"
+                            }
+                        },
+                        "visibility": "internal"
+                    },
+                    {
+                        "body": {
+                            "id": 19,
+                            "nodeType": "Block",
+                            "src": "232:115:0",
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "id": 17,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": false,
+                                        "lValueRequested": false,
+                                        "leftHandSide": {
+                                            "baseExpression": {
+                                                "id": 11,
+                                                "name": "tickets",
+                                                "nodeType": "Identifier",
+                                                "overloadedDeclarations": [],
+                                                "referencedDeclaration": 5,
+                                                "src": "302:7:0",
+                                                "typeDescriptions": {
+                                                    "typeIdentifier": "t_array$_t_array$_t_uint256_$dyn_storage_$dyn_storage",
+                                                    "typeString": "uint256[] storage ref[] storage ref"
+                                                }
+                                            },
+                                            "id": 15,
+                                            "indexExpression": {
+                                                "baseExpression": {
+                                                    "id": 12,
+                                                    "name": "_ticket",
+                                                    "nodeType": "Identifier",
+                                                    "overloadedDeclarations": [],
+                                                    "referencedDeclaration": 8,
+                                                    "src": "310:7:0",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                                                        "typeString": "uint256[] memory"
+                                                    }
+                                                },
+                                                "id": 14,
+                                                "indexExpression": {
+                                                    "hexValue": "30",
+                                                    "id": 13,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "kind": "number",
+                                                    "lValueRequested": false,
+                                                    "nodeType": "Literal",
+                                                    "src": "318:1:0",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    "value": "0"
+                                                },
+                                                "isConstant": false,
+                                                "isLValue": true,
+                                                "isPure": false,
+                                                "lValueRequested": false,
+                                                "nodeType": "IndexAccess",
+                                                "src": "310:10:0",
+                                                "typeDescriptions": {
+                                                    "typeIdentifier": "t_uint256",
+                                                    "typeString": "uint256"
+                                                }
+                                            },
+                                            "isConstant": false,
+                                            "isLValue": true,
+                                            "isPure": false,
+                                            "lValueRequested": true,
+                                            "nodeType": "IndexAccess",
+                                            "src": "302:19:0",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
+                                                "typeString": "uint256[] storage ref"
+                                            }
+                                        },
+                                        "nodeType": "Assignment",
+                                        "operator": "=",
+                                        "rightHandSide": {
+                                            "id": 16,
+                                            "name": "_ticket",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": 8,
+                                            "src": "324:7:0",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                                                "typeString": "uint256[] memory"
+                                            }
+                                        },
+                                        "src": "302:29:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
+                                            "typeString": "uint256[] storage ref"
+                                        }
+                                    },
+                                    "id": 18,
+                                    "nodeType": "ExpressionStatement",
+                                    "src": "302:29:0"
+                                }
+                            ]
+                        },
+                        "functionSelector": "d7a70d75",
+                        "id": 20,
+                        "implemented": true,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "addTicket",
+                        "nameLocation": "189:9:0",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 9,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 8,
+                                    "mutability": "mutable",
+                                    "name": "_ticket",
+                                    "nameLocation": "216:7:0",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 20,
+                                    "src": "199:24:0",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                                        "typeString": "uint256[]"
+                                    },
+                                    "typeName": {
+                                        "baseType": {
+                                            "id": 6,
+                                            "name": "uint256",
+                                            "nodeType": "ElementaryTypeName",
+                                            "src": "199:7:0",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_uint256",
+                                                "typeString": "uint256"
+                                            }
+                                        },
+                                        "id": 7,
+                                        "nodeType": "ArrayTypeName",
+                                        "src": "199:9:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                                            "typeString": "uint256[]"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "198:26:0"
+                        },
+                        "returnParameters": {
+                            "id": 10,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "232:0:0"
+                        },
+                        "scope": 30,
+                        "src": "180:167:0",
+                        "stateMutability": "nonpayable",
+                        "virtual": false,
+                        "visibility": "public"
+                    },
+                    {
+                        "body": {
+                            "id": 28,
+                            "nodeType": "Block",
+                            "src": "467:78:0",
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "expression": {
+                                            "id": 25,
+                                            "name": "tickets",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": 5,
+                                            "src": "524:7:0",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_array$_t_array$_t_uint256_$dyn_storage_$dyn_storage",
+                                                "typeString": "uint256[] storage ref[] storage ref"
+                                            }
+                                        },
+                                        "id": 26,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": false,
+                                        "lValueRequested": false,
+                                        "memberName": "length",
+                                        "nodeType": "MemberAccess",
+                                        "src": "524:14:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "functionReturnParameters": 24,
+                                    "id": 27,
+                                    "nodeType": "Return",
+                                    "src": "517:21:0"
+                                }
+                            ]
+                        },
+                        "functionSelector": "0b5adfff",
+                        "id": 29,
+                        "implemented": true,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getNumTickets",
+                        "nameLocation": "421:13:0",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 21,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "434:2:0"
+                        },
+                        "returnParameters": {
+                            "id": 24,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 23,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 29,
+                                    "src": "458:7:0",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 22,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "458:7:0",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "457:9:0"
+                        },
+                        "scope": 30,
+                        "src": "412:133:0",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "public"
+                    }
+                ],
+                "scope": 31,
+                "src": "58:491:0",
+                "usedErrors": []
+            }
+        ],
+        "src": "33:516:0"
+    },
+    "functionHashes": {
+        "addTicket(uint256[])": "d7a70d75",
+        "getNumTickets()": "0b5adfff"
+    },
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "112800",
+            "executionCost": "159",
+            "totalCost": "112959"
+        },
+        "external": {
+            "addTicket(uint256[])": "infinite",
+            "getNumTickets()": "2246"
+        }
+    }
+}

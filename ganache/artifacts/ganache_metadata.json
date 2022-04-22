@@ -1,0 +1,72 @@
+{
+	"compiler": {
+		"version": "0.8.6+commit.11564f7e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "getMessage",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_message",
+						"type": "string"
+					}
+				],
+				"name": "setMessage",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"ganache/ganache.sol": "ganache"
+		},
+		"evmVersion": "berlin",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ganache/ganache.sol": {
+			"keccak256": "0x2a9b208a8553f2ac4f68676a2fe4cafcddc0a55867c79a5b1f3df0929c8b7872",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ae61299d8e4d9f747125dc177a13c12d52abdc563937bdac5ef5a3fbea2b622c",
+				"dweb:/ipfs/QmdybKAwF5WstASDTdGkm6LkNesHPnYxhdWfZByZQqinNE"
+			]
+		}
+	},
+	"version": 1
+}
