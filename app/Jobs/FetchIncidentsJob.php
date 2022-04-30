@@ -14,15 +14,20 @@ class FetchIncidentsJob
     use Dispatchable;
 
     private $page;
+    /**
+     * @var bool
+     */
+    private $is_only_sync;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($page)
+    public function __construct($page, $is_only_sync = true)
     {
         $this->page = $page;
+        $this->is_only_sync = $is_only_sync;
     }
 
     /**
@@ -33,6 +38,16 @@ class FetchIncidentsJob
     public function handle()
     {
         $incidents = $this->requestAndScrap();
+        if ($this->is_only_sync) {
+            foreach ($incidents as $incident) {
+                throw_if(Incident::where('folio', $incident['folio'])->exists());
+                dump($incident['folio']);
+
+
+                Incident::create($incident);
+            }
+            return ;
+        }
 
         try {
             Incident::insert($incidents);
@@ -41,8 +56,6 @@ class FetchIncidentsJob
             dump('ERROR HERE' . $exception->getMessage());
             logger($exception->getMessage(), [$exception->getTrace(), 'set' => $incidents]);
         }
-
-
     }
 
     /**
@@ -60,7 +73,7 @@ class FetchIncidentsJob
                 'folio' => $node->filter('td')->eq(10)->filter('a')->attr('data-id-reporte'),
                 'dependencia' => $node->filter('td')->eq(1)->text(),
                 'id_asignacion' => $node->filter('td')->eq(2)->text(),
-                'prioridad' => $node->filter('td')->eq(4)->filter('span')->text(),
+                'priority' => $node->filter('td')->eq(4)->filter('span')->text(),
                 'reporte' => $node->filter('td')->eq(4)->filter('small')->text(),
                 'ciudadano' => $node->filter('td')->eq(5)->text(),
                 'domicilio' => $node->filter('td')->eq(6)->text(),

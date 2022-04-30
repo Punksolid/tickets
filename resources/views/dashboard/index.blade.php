@@ -7,6 +7,58 @@
     <h1>Dashboard</h1>
     <div class="row">
         <div class="col-lg-6">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Reportes Pendientes Por Dependencia</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                            <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                            <div class=""></div>
+                        </div>
+                    </div>
+                    <canvas class="chartjs-render-monitor"
+                            height="250"
+                            id="openIncidentsByDependencyDonutChart"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 394px;"
+                            width="394"></canvas>
+                </div>
+
+            </div>
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Reportes Por Estatus</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                            <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                            <div class=""></div>
+                        </div>
+                    </div>
+                    <canvas class="chartjs-render-monitor"
+                            height="250"
+                            id="totalIncidentsByStatus"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 394px;"
+                            width="394"></canvas>
+                </div>
+
+            </div>
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
@@ -36,8 +88,9 @@
                                 <div class=""></div>
                             </div>
                         </div>
-{{--                        <canvas id="reportsTimeline" class="chartjs-render-monitor" style="display: block;"></canvas>--}}
-                        <canvas id="reportsTimeline" style="display: block; width: 677px; height: 200px;" class="chartjs-render-monitor" width="677" height="200"></canvas>
+                        {{--                        <canvas id="reportsTimeline" class="chartjs-render-monitor" style="display: block;"></canvas>--}}
+                        <canvas id="reportsTimeline" style="display: block; width: 677px; height: 200px;"
+                                class="chartjs-render-monitor" width="677" height="200"></canvas>
                     </div>
                     <div class="d-flex flex-row justify-content-end">
 <span class="mr-2">
@@ -57,24 +110,11 @@
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Sales</h3>
-                        <a href="{{ route('incidents.index') }}">View Report</a>
+                        <h3 class="card-title">Incidentes Totales Por Dependencia</h3>
+                        <a href="{{ route('incidents.index') }}">Ver Incidentes</a>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex">
-                        <p class="d-flex flex-column">
-                            <span class="text-bold text-lg">$18,230.00</span>
-                            <span>Sales Over Time</span>
-                        </p>
-                        <p class="ml-auto d-flex flex-column text-right">
-<span class="text-success">
-<i class="fas fa-arrow-up"></i> 33.1%
-</span>
-                            <span class="text-muted">Since last month</span>
-                        </p>
-                    </div>
-
                     <div class="position-relative mb-4">
                         <div class="chartjs-size-monitor">
                             <div class="chartjs-size-monitor-expand">
@@ -97,7 +137,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 @stop
 
@@ -121,15 +160,6 @@
             type: 'pie',
             options: {
                 responsive: true
-                // plugins: {
-                //     tooltip: {
-                //         enabled: false
-                //     },
-                //     labels: {
-                //         // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
-                //         // render: 'label',
-                //     }
-                // }
             },
             data: {
                 labels: {!! $quantity_of_incidents_by_dependency->pluck('dependencia') !!},
@@ -168,6 +198,88 @@
             },
             options: {
                 responsive: true
+            }
+        });
+    </script>
+    <script>
+        const donutChartCanvas = document.getElementById('openIncidentsByDependencyDonutChart').getContext('2d');
+
+        const donutChart = new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: {!! $open_incidents_by_dependency->pluck('dependencia') !!},
+                datasets: [{
+                    label: 'Dependencia',
+                    data: {!! $open_incidents_by_dependency->pluck('total') !!},
+                    backgroundColor: ['#f56954',
+                        '#00a65a',
+                        '#f39c12',
+                        '#00c0ef',
+                        '#3c8dbc',
+                        '#d2d6de',
+                        '#932ab6',
+                        '#d73925',
+                        '#3498db',
+                        '#9b59b6',
+                        '#8abb6f',
+                        '#0014c7',
+                        '#9b59b6',
+                        '#8abb6f',
+                        '#0014c7',
+                        '#bfd3b7',
+                        '#3d2800',
+                        '#00c0ef',
+                        '#ec00ff',
+                        '#d2d6de'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+
+            }
+        });
+    </script>
+    <script>
+        const totalIncidentsByStatus = document.getElementById('totalIncidentsByStatus').getContext('2d');
+
+        const totalIncidentsByStatusChart = new Chart(totalIncidentsByStatus, {
+            type: 'doughnut',
+            data: {
+                labels: {!! $total_incident_by_status->pluck('status') !!},
+                datasets: [{
+                    label: 'Dependencia',
+                    data: {!! $total_incident_by_status->pluck('total') !!},
+                    backgroundColor: ['#f56954',
+                        '#00a65a',
+                        '#f39c12',
+                        '#00c0ef',
+                        '#3c8dbc',
+                        '#d2d6de',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+
             }
         });
     </script>

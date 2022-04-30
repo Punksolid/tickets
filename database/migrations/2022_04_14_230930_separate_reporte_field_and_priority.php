@@ -18,7 +18,6 @@ class SeparateReporteFieldAndPriority extends Migration
 
 
         $incidents = Incident::all();
-        // create new ConsoleOutput instance
 
         foreach ($incidents as $incident) {
             $reporte = explode(' ', $incident->reporte);
@@ -37,9 +36,11 @@ class SeparateReporteFieldAndPriority extends Migration
      */
     public function down()
     {
-        // drop column priority
-        Schema::table('incidents', function (Blueprint $table) {
-            $table->dropColumn('priority');
-        });
+        // drop column priority if exists
+        if (Schema::hasColumn('incidents', 'priority')) {
+            Schema::table('incidents', function (Blueprint $table) {
+                $table->dropColumn('priority');
+            });
+        }
     }
 }

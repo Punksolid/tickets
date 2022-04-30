@@ -12,7 +12,8 @@ class TicketsFetch extends Command
      *
      * @var string
      */
-    protected $signature = 'tickets:fetch {start_page}';
+    // Add boolean to indicate if we should fetch all incidents or just new ones
+    protected $signature = 'tickets:fetch {start_page} {--sync}';
 
     /**
      * The console command description.
@@ -38,22 +39,23 @@ class TicketsFetch extends Command
      */
     public function handle()
     {
+        $is_only_sync = $this->option('sync');
         $start_page = $this->argument('start_page');
 
         if (!$start_page) {
             $start_page = 1;
         }
         $this->info('Fetching tickets from page ' . $start_page);
-        // print to console the current time
-        // with progress bar
+
+
         $total_pages = $this->getTotalPages();
         $total_pages = $total_pages - $start_page + 1;
         $bar = $this->output->createProgressBar($total_pages);
         $bar->start();
-        // loop through all pages
+
         for ($page = $start_page; $page <= $total_pages; $page++) {
 
-            dispatch(new FetchIncidentsJob($page));
+            dispatch(new FetchIncidentsJob($page, $is_only_sync));
             $bar->advance();
         }
 

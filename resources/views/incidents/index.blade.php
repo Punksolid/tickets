@@ -30,7 +30,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                             <tr>
-                                <th>ID</th>
+{{--                                <th>ID</th>--}}
                                 <th>Folio</th>
                                 <th>Reporte</th>
                                 <th>Domicilio</th>
@@ -41,7 +41,7 @@
                             <tbody>
                                 @forelse($incidents as $incident)
                                     <tr>
-                                        <td>{{ $incident->id }}</td>
+{{--                                        <td>{{ $incident->id }}</td>--}}
                                         <td>{{ $incident->folio }}</td>
                                         <td>{{ substr($incident->reporte, 0, 50) }}...</td>
                                         <td>{{ substr($incident->domicilio, 0, 50) }}...</td>

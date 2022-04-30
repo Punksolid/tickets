@@ -23,13 +23,8 @@ class WhatsappBotController extends Controller
      */
     public function newIncident()
     {
-        // auth token config('services.twilio.token')
-        $sid    = "config('services.twilio.sid')";
-        $token  = "config('services.twilio.token')";
 
-        $accountSid = "config('services.twilio.sid')"; // Your Account SID from www.twilio.com/console
-        $twilio = new Client($sid, $token);
-
+        $twilio = new Client(config('services.twilio.sid'), config('services.twilio.token'));
 
         $message = $twilio->messages
             ->create("whatsapp:+5216672067464", // to
