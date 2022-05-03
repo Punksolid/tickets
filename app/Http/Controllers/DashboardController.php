@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incident;
+use App\Repositories\IncidentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->incidentsRepository = new IncidentRepository();
+    }
+
     // index
     public function index()
     {
-        $incidents = Incident::selectRaw("strftime(\"%m-%Y\", reported_at) as date, count(*) as total")
-            ->groupBy('date')
-            ->orderBy('reported_at', 'asc')
-            ->orderBy('date', 'asc')
-            ->get();
+
+        $incidents = $this->incidentsRepository->getAllByDate();
 
         /** @var Collection $quantity_of_incidents_by_dependency */
         $quantity_of_incidents_by_dependency = Incident::
