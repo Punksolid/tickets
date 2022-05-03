@@ -11,9 +11,16 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class IncidentsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $incidents = Incident::orderBy('id', 'desc')->paginate();
+        $incidents_query = Incident::query();
+
+        if ($request->has('geocoded')) {
+            $incidents_query->where('lat', '!=', null);
+            $incidents_query->orWhere('lat', '!=', 0);
+        }
+
+        $incidents = $incidents_query->paginate();
 
         return view('incidents.index', compact('incidents'));
     }

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('map');
 });
 Route::get('/incidents', [IncidentsController::class, 'index'])->name('incidents.index');
 Route::get('/incidents/{incident}', [IncidentsController::class, 'show'])->name('incidents.show');

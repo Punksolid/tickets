@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>Estatus</label>
-                            <p class="badge {{ $incident->status == 'ATENTIDO' ?: 'badge-success' }}">{{ $incident->status }}</p>
+                            <p class="badge {{ $incident->status == 'ATENDIDO' ? 'badge-success': 'badge-info' }}">{{ $incident->status }}</p>
                         </div>
                         <div class="col-md-12">
                             <label for="">Tipo de Servicio</label>
@@ -120,7 +120,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Mapa</h3>
+                    <h3 class="card-title">Mapa @if($incident->lat)<span>{{ $incident->lat }},{{ $incident->lng }}@endif</span></h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
@@ -148,15 +148,23 @@
     <script>
         var map = L.map('map').setView([24.8611545, -107.3906211], 13);
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHVua3NvbGlkIiwiYSI6ImNsMXpycmFhbTA0em8zaWpyNHNvNzZ0bHoifQ.w_es0DEYkfIvycN6gTQELQ', {
+        // Center map to 24.7498304,-107.3878399
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={{ config('services.mapbox.public_token') }}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
+            maxZoom: 19,
+            center: [{{ $incident->lng }},{{ $incident->lat }}],
             id: 'mapbox/streets-v11',
+            setZoom: 16,
             tileSize: 512,
             zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoicHVua3NvbGlkIiwiYSI6ImNsMXpycmFhbTA0em8zaWpyNHNvNzZ0bHoifQ.w_es0DEYkfIvycN6gTQELQ'
+            accessToken: '{{ config('services.mapbox.public_token') }}'
         }).addTo(map);
-
+        map.setZoom(16);
+        map.center = [{{ $incident->lng }},{{ $incident->lat }}];
         var marker = L.marker([{{$incident->lat}}, {{$incident->lng}}]).addTo(map);
+        // center the map to the location of the marker
+
+
+
     </script>
 @stop

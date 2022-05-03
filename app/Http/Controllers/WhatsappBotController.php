@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\MapService;
 use App\Models\Incident;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
@@ -38,15 +39,15 @@ class WhatsappBotController extends Controller
 
     public function botResponse(Request $request)
     {
+        $citizens = cache()->get('citizens', []);
 
-        $citizens = $request->session()->get('citizens', []);
         $response = new MessagingResponse();
         $waId = $request->get('From');
+
         $citizen = $this->getCitizen($waId);
         if ($request->get('Body') == 'cancelar') {
             $response->message("Se ha cancelado el registro");
-            $request->session()->forget('citizens');
-//            logger($citizens);
+            cache()->forget('citizens');
 
             return $response;
         }
@@ -54,7 +55,7 @@ class WhatsappBotController extends Controller
         if ($request->input('Body') != 'hola' && $citizen['step'] == 0) {
             $response->message("Hola, soy el bot de Whatsapp, no te preocupes, estoy aqui para ayudarte.");
             $response->message("Escribe 'hola' para comenzar.");
-            $request->session()->put('citizens', $citizens);
+            cache()->put('citizens', $citizens, now()->addMinutes(5));
 
             return $response;
         }
@@ -64,12 +65,11 @@ class WhatsappBotController extends Controller
             $response->message($this->questions()[0]);
             $citizen['step'] = 1;
             $citizens[$waId] = $citizen;
-            session()->put("citizens", $citizens);
+            cache()->put("citizens", $citizens, now()->addMinutes(5));
 
             return $response;
         }
 
-        // save in session again
         $questions = $this->questions();
 
         if ($citizen['step'] <= count($questions)) {
@@ -77,9 +77,11 @@ class WhatsappBotController extends Controller
             $citizen[$questions[$question_index - 1]] = $request->get('Body');
             $citizen['step']++;
             $citizens[$waId] = $citizen;
-            $request->session()->put('citizens', $citizens);
+            cache()->put('citizens', $citizens, now()->addMinutes(5));
             if ($citizen['step'] < 5){
                 $response->message($questions[$question_index]);
+//                $response->message($this->writeContext($citizen));
+
                 return $response;
             }
         }
@@ -100,23 +102,32 @@ class WhatsappBotController extends Controller
         if ($incident){
             $incident->folio = $incident->id;
             $incident->save();
-            $this->registerInBlockchain($incident);
+            try {
+                $this->registerInBlockchain($incident);
+            } catch (\Exception $exception) {
+                logger()->error('Blockchain Error: ', [$exception]);
+            }
         }
         $response->message('Incidente registrado ' . $incident->id);
         $response->message('Gracias por utilizar el servicio de Whatsapp');
         $citizen['step'] = 0;
         $citizens[$waId] = $citizen;
-        session()->put("citizens", $citizens);
+        cache()->put("citizens", $citizens, now()->addMinutes(5));
 
         return $response;
     }
 
 
-    public function questions()
+    /**
+     * AKA steps
+     * @return string[]
+     */
+    public function questions(): array
     {
         return [
             'Cual es su nombre?',
             'A cual dependencia va dirigido?',
+//            'Cual es el tipo de servicio?',
             'Cual es el incidente?',
             'Cual es la dirección del incidente?',
         ];
@@ -147,9 +158,9 @@ class WhatsappBotController extends Controller
     {
         logger('botStatus');
     }
-    private function getCitizen($waId)
+    private function getCitizen(string $waId)
     {
-        $citizens = session()->get('citizens', []);
+        $citizens = cache()->get('citizens', []);
         if (!isset($citizens[$waId])) {
             $citizens[$waId] = [
                 'step' => 0
@@ -180,5 +191,28 @@ class WhatsappBotController extends Controller
                 logger('Transaction has made:) id: ' . $result);
             }
         });
+    }
+
+    private function getOptionsForDepartment(int $department_id): string
+    {
+        $map_service = new MapService();
+        $get_services_options = $map_service->getServicesOptions($department_id);
+        $formatted_options = [];
+        foreach ($get_services_options as $service_option) {
+            $formatted_options[] = "{$service_option['id_tipo_servicio']} - {$service_option['nombre_tipo_servicio']}";
+        }
+
+        return implode(', ', $formatted_options);
+    }
+
+    private function writeContext(string $citizen)
+    {
+        $citizen = $this->getCitizen($citizen);
+
+        if ($citizen['step'] === 2){
+            return $this->getOptionsForDepartment($citizen['department_id']);
+        }
+
+        return ;
     }
 }

@@ -41,14 +41,23 @@ class DashboardController extends Controller
                 'dependencia' => $item->first()->dependencia
             ];
         });
-
+        $total_incidents = Incident::count();
         $total_incident_by_status = $this->getTotalIncidentsByStatus();
+        $total_geocoded_incidents = Incident::where('lat', '!=', null)->orWhere('lat', '!=', 0)->count();
+        $total_de_usuarios_que_han_registrado_incidentes = $this->getFuncionarioConMenosIncidentes()->count();
+
+        $aproximado_de_incidentes_con_status_pendiente = Incident::where('status', '=', 'Pendiente')->orWhere('status', 'PENDIENTE')->count();
+
         return view('dashboard.index', compact(
             'incidents',
             'quantity_of_incidents_by_dependency',
             'total_reports',
             'open_incidents_by_dependency',
-            'total_incident_by_status'
+            'total_incident_by_status',
+            'total_incidents',
+            'total_geocoded_incidents',
+            'total_de_usuarios_que_han_registrado_incidentes',
+            'aproximado_de_incidentes_con_status_pendiente'
         ));
     }
 
@@ -62,7 +71,8 @@ class DashboardController extends Controller
 
         $markers = $mapped_incidents->map(function ($item, $key) {
             $colors = [
-                'Alumbrado Publico' => '#ff0000',
+                // yellow almost white
+                'Alumbrado Publico' => '#fdfd96',
                 'Aseo, Limpia y Lotes Baldios' => '#FFA500',
                 'Inspeccion y Vigilancia' => '#FFFF00',
                 'Dirección de Sistemas de Drenajes Pluviales' => '#008000',
@@ -93,6 +103,22 @@ HTML, route('incidents.show', $item->id)),
             return [
                 'total' => $item->sum('total'),
                 'status' => ucfirst(strtolower($item->first()->status))
+            ];
+        });
+    }
+
+    private function getFuncionarioConMenosIncidentes()
+    {
+        $funcionario_con_menos_incidentes = Incident::
+        groupBy('usuario')
+            ->select(DB::raw('count(*) as total, usuario'))
+            ->get();
+
+        $funcionario_con_menos_incidentes = $funcionario_con_menos_incidentes->groupBy('usuario');
+        return $funcionario_con_menos_incidentes->map(function ($item) {
+            return [
+                'total' => $item->sum('total'),
+                'usuario' => $item->first()->usuario
             ];
         });
     }

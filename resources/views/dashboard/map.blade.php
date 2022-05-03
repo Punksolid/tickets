@@ -31,13 +31,13 @@
     <script>
         var map = L.map('map').setView([24.800399, -107.403639], 15);
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHVua3NvbGlkIiwiYSI6ImNsMXpycmFhbTA0em8zaWpyNHNvNzZ0bHoifQ.w_es0DEYkfIvycN6gTQELQ', {
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={{ config('services.mapbox.public_token') }}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoicHVua3NvbGlkIiwiYSI6ImNsMXpycmFhbTA0em8zaWpyNHNvNzZ0bHoifQ.w_es0DEYkfIvycN6gTQELQ',
+            accessToken: '{{ config('services.mapbox.public_token') }}',
             preferCanvas: true,
         }).addTo(map);
         var locations = {!! $markers !!};

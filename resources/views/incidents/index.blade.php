@@ -35,6 +35,7 @@
                                 <th>Reporte</th>
                                 <th>Domicilio</th>
                                 <th>Estatus</th>
+                                <th>Tiempo</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -45,7 +46,8 @@
                                         <td>{{ $incident->folio }}</td>
                                         <td>{{ substr($incident->reporte, 0, 50) }}...</td>
                                         <td>{{ substr($incident->domicilio, 0, 50) }}...</td>
-                                        <td>{{ $incident->status }}</td>
+                                        <td><p class="badge {{ $incident->status == 'ATENDIDO' ? 'badge-success': 'badge-info' }}">{{ $incident->status }}</p></td>
+                                        <td>{{ $incident->fecha->diffForHumans() }}</td>
                                         <td>
                                             <a href="{{ route('incidents.show', $incident->id) }}" class="btn btn-info btn-sm">
                                                 <i class="fas fa-eye"></i>
@@ -66,7 +68,7 @@
             </div>
         </div>
     </div>
-    {{ $incidents->links() }}
+    {{ $incidents->withQueryString()->links() }}
 @stop
 
 

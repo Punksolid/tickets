@@ -4,7 +4,64 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <div class="row">
+        <div class="col-lg-3 col-6">
+
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $total_incidents }}</h3>
+                    <p>Incidentes Registrados</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="{{ route('incidents.index') }}" class="small-box-footer">Ver<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ $total_geocoded_incidents }}<sup style="font-size: 20px"></sup></h3>
+                    <p>Incidentes con Geolocalización</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{{ route('incidents.index',['geocoded' => true ]) }}" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ $total_de_usuarios_que_han_registrado_incidentes }}</h3>
+                    <p>Total de Usuarios que Han Registrado Incidentes</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer"> - <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $aproximado_de_incidentes_con_status_pendiente }}</h3>
+                    <p>Aproximado de Incidentes con Status Pendiente</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">-</a>
+            </div>
+        </div>
+
+    </div>
     <div class="row">
         <div class="col-lg-6">
             <div class="card card-danger">

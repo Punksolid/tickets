@@ -34,4 +34,7 @@ return [
         'token' => env('TWILIO_AUTH_TOKEN'),
         'whatsapp_from' => env('TWILIO_WHATSAPP_FROM')
     ],
+    'mapbox' => [
+        'public_token' => env('MAPBOX_PUBLIC_TOKEN')
+    ],
 ];
