@@ -28,6 +28,8 @@ Route::get('/map', [DashboardController::class, 'map'])->name('map');
 Route::get('/bot', [WhatsappBotController::class, 'newIncident'])->name('bot');
 
 
-Auth::routes();
+Auth::routes([
+    'register' => false
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

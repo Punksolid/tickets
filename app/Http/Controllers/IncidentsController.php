@@ -27,6 +27,13 @@ class IncidentsController extends Controller
 
     public function show(Incident $incident)
     {
+        if (! auth()->check()) {
+            $incident->ciudadano = null;
+            // check if there is a phone number in $incient->reporte
+            $incident->reporte = $this->replacePhoneNumberWithAsterisk($incident->reporte);
+            $incident->reporte = $this->replaceNamesWithAsterisks($incident->reporte);
+        }
+
         return view('incidents.show', compact('incident'));
     }
 
@@ -78,5 +85,107 @@ class IncidentsController extends Controller
 //            $fecha,
 //            $usuario,
 //            $estatus);
+    }
+
+    private function replacePhoneNumberWithAsterisk($reporte)
+    {
+        return preg_replace('/\b[0-9]{6,10}\b/', '**********', $reporte);
+    }
+
+    private function replaceNamesWithAsterisks($reporte)
+    {
+        $black_list_lastnames = [
+            'García',
+            'González',
+            'López',
+            'Martínez',
+            'Méndez',
+            'Rodríguez',
+            'Sánchez',
+            'Álvarez',
+            'Gómez',
+            'Pérez',
+            'Reyes',
+            'Ramírez',
+            'Torres',
+            'Flores',
+            'Vázquez',
+            'Ramos',
+            'Gutiérrez',
+            'Muñoz',
+            'Álvaro',
+            'Castillo',
+            'Cortés',
+            'Cabrera',
+            'Santos',
+            'Puente',
+            'López',
+            'García',
+            'González',
+            'López',
+            'Martínez',
+            'Méndez',
+            'Rodríguez',
+            'Sánchez',
+            'Álvarez',
+            'Gómez',
+            'Pérez',
+            'Reyes',
+            'Ramírez',
+            'Torres',
+            'Flores',
+            'Vázquez',
+            'Ramos',
+            'Gutiérrez',
+            'Muñoz',
+            'Álvaro',
+            'Castillo',
+            'Cortés',
+            'Cabrera',
+            'Santos',
+            'Puente',
+            'López',
+            'García',
+            'González',
+            'López',
+            'Martínez',
+            'Méndez',
+            'Rodríguez',
+            'Sánchez',
+            'Álvarez',
+            'Gómez',
+            'Pérez',
+            'Reyes',
+            'Ramírez',
+            'Torres',
+            'Flores',
+            'Vázquez',
+            'Ramos',
+            'Gutiérrez',
+            'Muñoz',
+            'Álvaro',
+        ];
+        $top_first_names = [
+            'Juan',
+            'Carlos',
+            'Pedro',
+            'Miguel',
+            'Luis',
+            'Ricardo',
+            'Jorge',
+            'Antonio',
+            'Manuel',
+            'José',
+            'Javier',
+        ];
+
+        foreach ($black_list_lastnames as $lastname) {
+            $reporte = preg_replace('/\b' . $lastname . '\b/', '*****', $reporte);
+        }
+        foreach ($top_first_names as $firstname) {
+            $reporte = preg_replace('/\b' . $firstname . '\b/', '*****', $reporte);
+        }
+
+        return $reporte;
     }
 }

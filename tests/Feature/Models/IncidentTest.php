@@ -15,6 +15,7 @@ class IncidentTest extends TestCase
 
 //    use DatabaseTransactions;
     use DatabaseMigrations;
+    use WithFaker;
     /**
      * A basic feature test example.
      *
@@ -38,6 +39,19 @@ class IncidentTest extends TestCase
         $call->assertSee('Correo Electrónico');
         $call->assertSee('Estatus');
         $call->assertSee('Mapa');
+    }
+
+    public function test_it_should_not_show_phone_number_of_citizen_if_there_is_a_phone_number_in_reporte()
+    {
+        $phone_number = "667{$this->faker->randomNumber(7)}";
+        $incident_details_to_show_privately = Incident::factory()->create([
+            'reporte' => "{$this->faker->text} {$phone_number}"
+        ]);
+
+        $call = $this->get(route('incidents.show', ['incident' => $incident_details_to_show_privately->id]));
+
+        $call->assertStatus(200);
+        $call->assertDontSee($phone_number);
     }
 
     /**
