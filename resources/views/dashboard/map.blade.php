@@ -48,7 +48,7 @@
                 renderer: myRenderer,
                 color: locations[i][3],
             }).addTo(map);
-            var link = locations[i][2] + '<br><a href="'+ locations[i][4] +'" class="btn btn-sm">Ver</a>';
+            var link = locations[i][2] + '<br><a href="/incidents/ '+ locations[i][4] +'" class="btn btn-sm">Ver</a>';
             circleMarker.bindPopup(link);
         }
 

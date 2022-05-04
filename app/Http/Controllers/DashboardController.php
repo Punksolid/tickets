@@ -6,6 +6,7 @@ use App\Models\Incident;
 use App\Repositories\IncidentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -66,31 +67,38 @@ class DashboardController extends Controller
 
     public function map()
     {
-        $mapped_incidents = Incident::where('lat', '!=', null)
-            ->where('lat', '!=', 0)
-            ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
-            ->getQuery()
-            ->get();
+
+        // get $mapped_incidents from cache or fresh
+        $mapped_incidents = $this->getMappedIncidents();
 
         $colors = [
             'Alumbrado Publico' => '#fdfd96',
             'Aseo, Limpia y Lotes Baldios' => '#FFA500',
-            'Inspeccion y Vigilancia' => '#FFFF00',
+            // brown color
+            'Inspeccion y Vigilancia' => '#FFA500',
             'Dirección de Sistemas de Drenajes Pluviales' => '#008000',
             'Parques y Jardines del Ayuntamiento' => '#0000FF',
             'Obras Publicas' => '#800080',
+            // red color
+            'Fugas de Agua' => '#FF0000',
+            // orange color
+            'Lotes Baldios' => '#FFA500',
+            // brown color
+            'Seguridad Publica' => '#FFA500',
+            'Drenajes y Sistemas Pluviales' => '#008000',
+            'Dirección de Movilidad' => '#0000FF',
         ];
 
-        $markers = $mapped_incidents->map(function ($item, $key) use ($colors) {
+        $markers = $mapped_incidents->map(function ($item) use ($colors) {
             return [
                 $item->lat, // 0
                 $item->lng, // 1
                 $item->reporte, // 2
                 $colors[$item->dependencia] ?? '#000000', // 3
-                $item->url = route('incidents.show', $item->id), // 4
+                $item->id // 4
             ];
         });
-
+        
         return view('dashboard.map', [
             'markers' => $markers->toJson(),
         ]);
@@ -125,6 +133,17 @@ class DashboardController extends Controller
                 'total' => $item->sum('total'),
                 'usuario' => $item->first()->usuario
             ];
+        });
+    }
+
+    private function getMappedIncidents()
+    {
+        return Cache::remember('mapped_incidents', now()->addMinutes(20), function () {
+            return Incident::where('lat', '!=', null)
+                ->where('lat', '!=', 0)
+                ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
+                ->getQuery()
+                ->get();
         });
     }
 
