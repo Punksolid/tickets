@@ -67,32 +67,33 @@ class DashboardController extends Controller
     public function map()
     {
         $mapped_incidents = Incident::where('lat', '!=', null)
-            ->where('lng', '!=', null)
             ->where('lat', '!=', 0)
-            ->where('lng', '!=', 0)
             ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
+            ->getQuery()
             ->get();
 
-        $markers = $mapped_incidents->map(function ($item, $key) {
-            $colors = [
-                // yellow almost white
-                'Alumbrado Publico' => '#fdfd96',
-                'Aseo, Limpia y Lotes Baldios' => '#FFA500',
-                'Inspeccion y Vigilancia' => '#FFFF00',
-                'Dirección de Sistemas de Drenajes Pluviales' => '#008000',
-                'Parques y Jardines del Ayuntamiento' => '#0000FF',
-                'Obras Publicas' => '#800080',
-            ];
+        $colors = [
+            'Alumbrado Publico' => '#fdfd96',
+            'Aseo, Limpia y Lotes Baldios' => '#FFA500',
+            'Inspeccion y Vigilancia' => '#FFFF00',
+            'Dirección de Sistemas de Drenajes Pluviales' => '#008000',
+            'Parques y Jardines del Ayuntamiento' => '#0000FF',
+            'Obras Publicas' => '#800080',
+        ];
+
+        $markers = $mapped_incidents->map(function ($item, $key) use ($colors) {
             return [
-                $item->lat,
-                $item->lng,
-                $item->reporte . sprintf(<<<HTML
-                <br><a href="%s" class="btn btn-sm">Ver</a>
-HTML, route('incidents.show', $item->id)),
-                $colors[$item->dependencia] ?? '#000000',
+                $item->lat, // 0
+                $item->lng, // 1
+                $item->reporte, // 2
+                $colors[$item->dependencia] ?? '#000000', // 3
+                $item->url = route('incidents.show', $item->id), // 4
             ];
         });
-        return view('dashboard.map', compact('markers'));
+
+        return view('dashboard.map', [
+            'markers' => $markers->toJson(),
+        ]);
     }
 
     private function getTotalIncidentsByStatus()
