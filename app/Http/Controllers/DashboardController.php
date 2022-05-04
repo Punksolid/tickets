@@ -68,8 +68,9 @@ class DashboardController extends Controller
     {
         $mapped_incidents = Incident::where('lat', '!=', null)
             ->where('lng', '!=', null)
+            ->where('lat', '!=', 0)
+            ->where('lng', '!=', 0)
             ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
-            ->getQuery()
             ->get();
 
         $markers = $mapped_incidents->map(function ($item, $key) {
@@ -83,8 +84,8 @@ class DashboardController extends Controller
                 'Obras Publicas' => '#800080',
             ];
             return [
-                (float)$item->lat,
-                (float)$item->lng,
+                $item->lat,
+                $item->lng,
                 $item->reporte . sprintf(<<<HTML
                 <br><a href="%s" class="btn btn-sm">Ver</a>
 HTML, route('incidents.show', $item->id)),
