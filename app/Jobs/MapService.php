@@ -55,7 +55,7 @@ class MapService
                 ["id_tipo_servicio" => "21", "nombre_tipo_servicio" => "FUGAS DE AGUA"]]
         ],
         6 => [
-            'name' => 'Lotes Baldio',
+            'name' => 'Lotes Baldios',
             'subservices' => [
                 ["id_tipo_servicio" => "31", "nombre_tipo_servicio" => "Verificacion de Casas Abandonadas"],
                 ["id_tipo_servicio" => "30", "nombre_tipo_servicio" => "Verificacion de lotes", "plantilla" => ""]

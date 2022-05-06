@@ -149,14 +149,6 @@
                         <canvas id="reportsTimeline" style="display: block; width: 677px; height: 200px;"
                                 class="chartjs-render-monitor" width="677" height="200"></canvas>
                     </div>
-                    <div class="d-flex flex-row justify-content-end">
-<span class="mr-2">
-<i class="fas fa-square text-primary"></i> This Week
-</span>
-                        <span>
-<i class="fas fa-square text-gray"></i> Last Week
-</span>
-                    </div>
                 </div>
             </div>
 
