@@ -39,10 +39,11 @@ class FetchIncidentsJob
     {
         $incidents = $this->requestAndScrap();
         if ($this->is_only_sync) {
-            foreach ($incidents as $incident) {
-                throw_if(Incident::where('folio', $incident['folio'])->exists());
-                
-                Incident::create($incident);
+            foreach ($incidents as $incident_array) {
+                throw_if(Incident::where('folio', $incident_array['folio'])->exists(), new Exception('Incident already exists'));
+                $incident  = Incident::create($incident_array);
+                $incident->reported_at = $incident->fecha;
+                $incident->save();
             }
             return ;
         }

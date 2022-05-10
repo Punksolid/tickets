@@ -21,6 +21,8 @@ class Incident extends Model
         'usuario',
         'asignacion',
         'status',
+        'priority',
+        'reported_at',
     ];
 
     // Dates
