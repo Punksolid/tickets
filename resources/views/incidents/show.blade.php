@@ -147,7 +147,6 @@
     <script>
         var map = L.map('map').setView([24.8611545, -107.3906211], 13);
 
-        // Center map to 24.7498304,-107.3878399
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={{ config('services.mapbox.public_token') }}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 19,
@@ -161,8 +160,6 @@
         map.setZoom(16);
         map.center = [{{ $incident->lng }},{{ $incident->lat }}];
         var marker = L.marker([{{$incident->lat}}, {{$incident->lng}}]).addTo(map);
-        // center the map to the location of the marker
-
 
 
     </script>

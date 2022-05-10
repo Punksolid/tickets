@@ -5,6 +5,26 @@
 
 @section('content_header')
     <div class="row">
+        <div class="col-md-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Ultimas 24 horas</span>
+                    <span class="info-box-number">{{ $incidents_from_last_24_hours }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-sync-alt"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Ultima sincronización</span>
+                    <span class="info-box-number">{{ $last_incident->created_at->diffForHumans() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-3 col-6">
 
             <div class="small-box bg-info">

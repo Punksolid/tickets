@@ -51,8 +51,11 @@ class DashboardController extends Controller
         $total_de_usuarios_que_han_registrado_incidentes = $this->getFuncionarioConMenosIncidentes()->count();
 
         $aproximado_de_incidentes_con_status_pendiente = Incident::where('status', '=', 'Pendiente')->orWhere('status', 'PENDIENTE')->count();
-
+        $incidents_from_last_24_hours = Incident::where('created_at', '>=', now()->subDay())->count();
+        $last_incident = Incident::orderBy('created_at', 'desc')->first();
         return view('dashboard.index', compact(
+            'last_incident',
+            'incidents_from_last_24_hours',
             'incidents',
             'quantity_of_incidents_by_dependency',
             'total_reports',
@@ -98,7 +101,7 @@ class DashboardController extends Controller
                 $item->id // 4
             ];
         });
-        
+
         return view('dashboard.map', [
             'markers' => $markers->toJson(),
         ]);

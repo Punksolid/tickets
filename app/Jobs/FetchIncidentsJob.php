@@ -41,9 +41,7 @@ class FetchIncidentsJob
         if ($this->is_only_sync) {
             foreach ($incidents as $incident) {
                 throw_if(Incident::where('folio', $incident['folio'])->exists());
-                dump($incident['folio']);
-
-
+                
                 Incident::create($incident);
             }
             return ;
