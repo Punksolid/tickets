@@ -127,4 +127,17 @@ class IncidentTest extends TestCase
         $this->assertEquals(5, $total_incident_by_status['PENDIENTE']['total']);
         $this->assertEquals(15, $total_incident_by_status['ATENDIDO']['total']);
     }
+
+    public function test_changes_in_incidents()
+    {
+        $incident = Incident::factory()->create([
+            'status' => 'PENDIENTE'
+        ]);
+
+        $incident->status = 'ATENDIDO';
+        $incident->save();
+
+
+        $this->assertEquals('PENDIENTE', $incident->fresh()->previousVersion()->getModel()->status);
+    }
 }

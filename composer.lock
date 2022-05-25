@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80964bbef8818bb453838528fd11b65f",
+    "content-hash": "23688e37924abedda42baff5a59a9441",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -2679,6 +2679,72 @@
                 }
             ],
             "time": "2022-04-08T15:43:54+00:00"
+        },
+        {
+            "name": "mpociot/versionable",
+            "version": "4.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpociot/versionable.git",
+                "reference": "d63ac719ba7fb89d3d2b42c3a267abbbf8b495fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpociot/versionable/zipball/d63ac719ba7fb89d3d2b42c3a267abbbf8b495fe",
+                "reference": "d63ac719ba7fb89d3d2b42c3a267abbbf8b495fe",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.3 || ^6.0 || ^7.0 || ^8.0|^9.0",
+                "php": ">=7.1.0 || >=7.2.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^3.1 || ^4.0 || ^5.0 || ^6.0|^7.0",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mpociot\\Versionable\\Providers\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Mpociot\\Versionable": "src/"
+                },
+                "classmap": [
+                    "src/migrations",
+                    "tests/VersionableTestCase.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "m.pociot@gmail.com"
+                }
+            ],
+            "description": "Allows to create Laravel 4 / 5 / 6 / 7 Model versioning and restoring",
+            "homepage": "http://github.com/mpociot/versionable",
+            "keywords": [
+                "ardent",
+                "history",
+                "laravel",
+                "model",
+                "restore",
+                "version"
+            ],
+            "support": {
+                "issues": "https://github.com/mpociot/versionable/issues",
+                "source": "https://github.com/mpociot/versionable"
+            },
+            "time": "2022-02-10T07:55:36+00:00"
         },
         {
             "name": "myclabs/php-enum",

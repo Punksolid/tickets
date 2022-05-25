@@ -10,7 +10,7 @@
                 <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Ultimas 24 horas</span>
-                    <span class="info-box-number">{{ $incidents_from_last_24_hours }}</span>
+                    <span class="info-box-number"><a href="{{ route('incidents.index', ['sort' => '-reported_at']) }}">{{ $incidents_from_last_24_hours }}</a></span>
                 </div>
             </div>
         </div>

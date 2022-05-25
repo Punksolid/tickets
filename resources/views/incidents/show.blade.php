@@ -119,6 +119,59 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
+                    <h3 class="card-title">Linea de Tiempo</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Main node for this component -->
+                            <div class="timeline">
+                                <!-- Timeline time label -->
+                                <div class="time-label">
+                                    <span class="bg-green">{{ now()->toDateString() }}</span>
+                                </div>
+                                <div>
+                                    <!-- Before each timeline item corresponds to one icon on the left scale -->
+                                    @forelse($incident->versions as $version)
+                                    <i class="fas fa-check bg-yellow"></i>
+                                    <!-- Timeline item -->
+                                        <div class="timeline-item">
+                                            <!-- Time -->
+                                            <span class="time"><i class="fas fa-clock"></i>{{ $version->created_at->toDateString() }}</span>
+                                            <!-- Header. Optional -->
+                                            <h3 class="timeline-header"><a href="#">Actualización</a></h3>
+                                            <!-- Body -->
+                                            <div class="timeline-body">
+
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="timeline-item">
+                                            <!-- Time -->
+                                            <span class="time"><i class="fas fa-clock"></i>No hay más actualizaciones</span>
+                                        </div>
+                                    @endforelse
+
+                                </div>
+                                <div>
+                                     <i class="fas fa-clock bg-gray"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
                     <h3 class="card-title">Mapa @if($incident->lat)<span>{{ $incident->lat }},{{ $incident->lng }}@endif</span></h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">

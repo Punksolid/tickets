@@ -13,11 +13,15 @@ class IncidentsController extends Controller
 {
     public function index(Request $request)
     {
-        $incidents_query = Incident::query();
+        $incidents_query = Incident::query()->orderBy('created_at', 'desc');
 
         if ($request->has('geocoded')) {
             $incidents_query->where('lat', '!=', null);
             $incidents_query->orWhere('lat', '!=', 0);
+        }
+        if ($request->has('sort')) {
+            $column = $request->input('sort');
+            $incidents_query->orderBy($column, 'desc');
         }
 
         $incidents = $incidents_query->paginate();
