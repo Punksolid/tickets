@@ -37,4 +37,5 @@ return [
     'mapbox' => [
         'public_token' => env('MAPBOX_PUBLIC_TOKEN')
     ],
+    'the_url' => env('THE_URL')
 ];

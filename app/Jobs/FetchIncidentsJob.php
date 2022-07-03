@@ -40,7 +40,10 @@ class FetchIncidentsJob
         $incidents = $this->requestAndScrap();
         if ($this->is_only_sync) {
             foreach ($incidents as $incident_array) {
-                throw_if(Incident::where('folio', $incident_array['folio'])->exists(), new Exception('Incident already exists'));
+                // throw_if(Incident::where('folio', $incident_array['folio'])->exists(), new Exception('Incident already exists'));
+                if (Incident::where('folio', $incident_array['folio'])->exists()) {
+                    continue;
+                }
                 $incident  = Incident::create($incident_array);
                 $incident->reported_at = $incident->fecha;
                 $incident->save();
@@ -64,10 +67,8 @@ class FetchIncidentsJob
     {
 
         $crawler = $this->request();
-
         $incidents = $crawler->filter('tbody > tr')->each(function ($node) {
             $asignacion_field = $node->filter('td')->eq(3);
-
             return [
                 'folio' => $node->filter('td')->eq(10)->filter('a')->attr('data-id-reporte'),
                 'dependencia' => $node->filter('td')->eq(1)->text(),
@@ -76,7 +77,7 @@ class FetchIncidentsJob
                 'reporte' => $node->filter('td')->eq(4)->filter('small')->text(),
                 'ciudadano' => $node->filter('td')->eq(5)->text(),
                 'domicilio' => $node->filter('td')->eq(6)->text(),
-                'servicio' => $node->filter('td')->eq(7)->text(),
+                'servicio' => $node->filter('td')->eq(7)->filter('small')->text(),
                 'fecha' => $node->filter('td')->eq(8)->text(),
                 'usuario' => $node->filter('td')->eq(9)->text(),
                 'asignacion' => $asignacion_field->filter('small')->text(),
@@ -93,8 +94,10 @@ class FetchIncidentsJob
     public function request(): ?Crawler
     {
         $goutte_client = new Client(HttpClient::create(['headers' => ['X-Requested-With' => 'XMLHttpRequest']]));
-        $elements = $this->page * 20;
-        return $goutte_client->request('POST', "https://apps.culiacan.gob.mx/070/atencion-ciudadana/reportes/paginacion/$elements", [
+        $end_elements_of_page = $this->page * 20;
+        $url = config('services.the_url').$end_elements_of_page;
+
+        return $goutte_client->request('POST', $url, [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
     }

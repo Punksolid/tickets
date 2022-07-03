@@ -15,12 +15,8 @@ class RegisterIncidentCommand extends Command
      */
     protected $signature = 'tickets:new';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+
+    protected $description = 'Create an incident manually from command, emulating chatbot';
 
     /**
      * Create a new command instance.

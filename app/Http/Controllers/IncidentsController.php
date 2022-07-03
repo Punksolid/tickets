@@ -19,6 +19,9 @@ class IncidentsController extends Controller
             $incidents_query->where('lat', '!=', null);
             $incidents_query->orWhere('lat', '!=', 0);
         }
+        if ($request->has('reporte')) {
+            $incidents_query->where('reporte', 'like', '%' . $request->get('reporte') . '%');
+        }
 
         $incidents = $incidents_query->paginate();
 

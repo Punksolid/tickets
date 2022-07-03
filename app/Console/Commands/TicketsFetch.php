@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\FetchIncidentsJob;
+use App\Services\GetTotalPages;
 use Illuminate\Console\Command;
 
 class TicketsFetch extends Command
@@ -20,7 +21,7 @@ class TicketsFetch extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Fetch all incidents or just new ones';
 
     /**
      * Create a new command instance.
@@ -46,6 +47,7 @@ class TicketsFetch extends Command
             $start_page = 1;
         }
         $this->info('Fetching tickets from page ' . $start_page);
+        if ($is_only_sync) $this->info('Sync activated ');
 
 
         $total_pages = $this->getTotalPages();
@@ -63,8 +65,8 @@ class TicketsFetch extends Command
         return 0;
     }
 
-    private function getTotalPages()
+    private function getTotalPages(): int
     {
-        return round(67780 / 20) + 1;
+        return (new GetTotalPages())->__invoke();
     }
 }
