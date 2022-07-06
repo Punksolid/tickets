@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AddendumController;
+use App\Http\Controllers\AddendumsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IncidentsController;
 use App\Http\Controllers\WhatsappBotController;
@@ -22,6 +24,7 @@ Route::get('/', function () {
 });
 Route::get('/incidents', [IncidentsController::class, 'index'])->name('incidents.index');
 Route::get('/incidents/{incident}', [IncidentsController::class, 'show'])->name('incidents.show');
+Route::resource('/incidents/{incident}/addendums', AddendumController::class)->names('incidents.addendums');
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/map', [DashboardController::class, 'map'])->name('map');

@@ -131,6 +131,48 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Información adicional</span></h3>
+                    <div class="card-tools">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="width: 100%; height: 500px;">
+                        <div class="timeline">
+
+                        @foreach($incident->addendums as $additional)
+                                <div>
+                                    <i class="fas fa-envelope bg-blue"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> {{ $additional->created_at->format('d/m/Y H:i') }}</span>
+                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                                        <div class="timeline-body">
+                                            {{ $additional->description }}
+                                        </div>
+                                    </div>
+                                </div>
+                        @endforeach
+                        </div>
+
+                        <form method="post" action="{{  route('incidents.addendums.store', ['incident' => $incident])   }}">
+                            @csrf
+                            <label for="description">Información Adicional</label>
+                            <textarea class="form-control" name="description"></textarea>
+
+                            @if($errors->has('description'))
+                                    @foreach($errors->get('description') as $error)
+                                        <strong>{{ $error }}</strong>
+                                    @endforeach
+
+                            @endif
+                            <button type="submit" class="btn btn-success">Guardar Registro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @stop
 

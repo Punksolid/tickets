@@ -13,21 +13,14 @@ class FetchIncidentsJob
 {
     use Dispatchable;
 
-    private $page;
-    /**
-     * @var bool
-     */
-    private $is_only_sync;
-
     /**
      * Create a new job instance.
      *
      * @return void
+     * @param bool $is_only_sync
      */
-    public function __construct($page, $is_only_sync = true)
+    public function __construct(private $page, private $is_only_sync = true)
     {
-        $this->page = $page;
-        $this->is_only_sync = $is_only_sync;
     }
 
     /**
@@ -60,9 +53,6 @@ class FetchIncidentsJob
         }
     }
 
-    /**
-     * @return array
-     */
     public function requestAndScrap(): array
     {
 
@@ -88,9 +78,6 @@ class FetchIncidentsJob
         return $incidents;
     }
 
-    /**
-     * @return Crawler|null
-     */
     public function request(): ?Crawler
     {
         $goutte_client = new Client(HttpClient::create(['headers' => ['X-Requested-With' => 'XMLHttpRequest']]));

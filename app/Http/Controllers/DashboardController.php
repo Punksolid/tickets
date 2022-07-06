@@ -38,13 +38,11 @@ class DashboardController extends Controller
         // Put dependencia index as key and total as value
         $open_incidents_by_dependency = $open_incidents_by_dependency->groupBy('dependencia');
 
-        $open_incidents_by_dependency = $open_incidents_by_dependency->map(function ($item, $key) {
-            return [
-                'total' => $item->sum('total'),
-                'status' => $item->first()->status,
-                'dependencia' => $item->first()->dependencia
-            ];
-        });
+        $open_incidents_by_dependency = $open_incidents_by_dependency->map(fn($item, $key) => [
+            'total' => $item->sum('total'),
+            'status' => $item->first()->status,
+            'dependencia' => $item->first()->dependencia
+        ]);
         $total_incidents = Incident::count();
         $total_incident_by_status = $this->getTotalIncidentsByStatus();
         $total_geocoded_incidents = Incident::where('lat', '!=', null)->orWhere('lat', '!=', 0)->count();

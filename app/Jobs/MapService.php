@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class MapService
 {
 
-    const SERVICE_NAMES_IDS = [
+    final public const SERVICE_NAMES_IDS = [
         1 => [
             'name' => 'Alumbrado Público',
             'subservices' => [

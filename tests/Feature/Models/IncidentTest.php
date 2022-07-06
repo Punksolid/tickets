@@ -39,7 +39,10 @@ class IncidentTest extends TestCase
         $call->assertSee('Correo Electrónico');
         $call->assertSee('Estatus');
         $call->assertSee('Mapa');
+        $call->aasertSee('Información adicional');
     }
+
+
 
     public function test_it_should_not_show_phone_number_of_citizen_if_there_is_a_phone_number_in_reporte()
     {

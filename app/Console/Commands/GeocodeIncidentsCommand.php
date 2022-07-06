@@ -51,7 +51,7 @@ class GeocodeIncidentsCommand extends Command
 
         // get all incidents
         $incidents = Incident::whereNull('geocode')->get();
-        $bar = $this->output->createProgressBar(count($incidents));
+        $bar = $this->output->createProgressBar(is_countable($incidents) ? count($incidents) : 0);
         foreach ($incidents as $incident) {
             if ($incident->geocode) {
                 continue;

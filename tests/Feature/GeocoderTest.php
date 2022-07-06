@@ -15,9 +15,9 @@ class GeocoderTest extends TestCase
      *
      * @return void
      */
-    public function test_my_house()
+    public function test_ayuntamiento_address()
     {
-        $address = 'Rio del Carmen 1026, Colonia Popular, Culiacán, Sinaloa, México';
+        $address = 'Avenida Gral. Alvaro Obregon S/N esq. Calle Carl. Mariano Escobedo, Centro, 80000 Culiacán Rosales, Sin.';
         $client = new Client();
         $geocoder = new Geocoder($client);
         // set token

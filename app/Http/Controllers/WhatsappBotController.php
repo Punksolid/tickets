@@ -136,7 +136,6 @@ class WhatsappBotController extends Controller
 
     /**
      * @param Request $request
-     * @return void
      * @throws \Twilio\Exceptions\ConfigurationException
      * @throws \Twilio\Exceptions\TwilioException
      */

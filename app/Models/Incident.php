@@ -33,4 +33,8 @@ class Incident extends Model
         'reported_at',
     ];
 
+    public function addendums()
+    {
+        return $this->hasMany(Addendum::class, 'incident_id');
+    }
 }
