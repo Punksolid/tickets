@@ -37,5 +37,9 @@ return [
     'mapbox' => [
         'public_token' => env('MAPBOX_PUBLIC_TOKEN')
     ],
-    'the_url' => env('THE_URL')
+    'the_url' => env('THE_URL'),
+    'recaptcha' => [
+        'site_key' => env('CAPTCHA_SITE_KEY'),
+        'secret_key' => env('CAPTCHA_SECRET_KEY'),
+    ]
 ];

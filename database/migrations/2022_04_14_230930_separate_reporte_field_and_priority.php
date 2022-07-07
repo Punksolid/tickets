@@ -16,7 +16,11 @@ class SeparateReporteFieldAndPriority extends Migration
     public function up()
     {
 
-
+        if(! Schema::hasColumn('incidents','priority')) {
+            Schema::table('incidents', function($table) {
+                $table->string('priority');
+            });
+        }
         $incidents = Incident::all();
 
         foreach ($incidents as $incident) {

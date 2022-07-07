@@ -14,9 +14,12 @@ class UpdateFechaFormat extends Migration
      */
     public function up()
     {
-        Schema::table('incidents', function (Blueprint $table) {
-            $table->dateTime('reported_at')->nullable();
-        });
+        if (! Schema::hasColumn('incidents','reported_at')) {
+            Schema::table('incidents', function (Blueprint $table) {
+                $table->dateTime('reported_at')->nullable();
+            });
+        }
+
         $incidents = Incident::all();
         foreach ($incidents as $incident) {
             $incident->reported_at = $incident->fecha;

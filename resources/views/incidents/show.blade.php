@@ -134,7 +134,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Información adicional</span></h3>
+                    <h3 class="card-title"><span>Información adicional</span></h3>
                     <div class="card-tools">
                     </div>
                 </div>
@@ -147,20 +147,26 @@
                                     <i class="fas fa-envelope bg-blue"></i>
                                     <div class="timeline-item">
                                         <span class="time"><i class="fas fa-clock"></i> {{ $additional->created_at->format('d/m/Y H:i') }}</span>
-                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                                        <h3 class="timeline-header"><a href="#">Usuario Anonimo</a> agrego información adicional</h3>
                                         <div class="timeline-body">
                                             {{ $additional->description }}
+                                            @if($additional->evidence_path)
+                                                <img
+                                                    style="vertical-align: middle; max-width: 100%; max-height: 100%;"
+                                                    src="{{ asset($additional->evidence_path )}}"/>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                         @endforeach
                         </div>
 
-                        <form method="post" action="{{  route('incidents.addendums.store', ['incident' => $incident])   }}">
+                        <form method="post" action="{{  route('incidents.addendums.store', ['incident' => $incident])   }}" enctype="multipart/form-data">
                             @csrf
                             <label for="description">Información Adicional</label>
                             <textarea class="form-control" name="description"></textarea>
-
+                            <input type="file" name="evidence" />
+                            <input type="hidden" name="recaptcha" id="recaptcha">
                             @if($errors->has('description'))
                                     @foreach($errors->get('description') as $error)
                                         <strong>{{ $error }}</strong>
@@ -168,7 +174,7 @@
 
                             @endif
                             <button type="submit" class="btn btn-success">Guardar Registro</button>
-                        </form>
+                      </form>
                     </div>
                 </div>
             </div>
@@ -204,5 +210,15 @@
         var marker = L.marker([{{$incident->lat}}, {{$incident->lng}}]).addTo(map);
 
 
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'contact'}).then(function(token) {
+                if (token) {
+                    document.getElementById('recaptcha').value = token;
+                }
+            });
+        });
     </script>
 @stop

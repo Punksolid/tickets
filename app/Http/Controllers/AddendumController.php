@@ -6,6 +6,7 @@ use App\Http\Requests\StoreAddendumRequest;
 use App\Http\Requests\UpdateAddendumRequest;
 use App\Models\Addendum;
 use App\Models\Incident;
+use http\Client\Request;
 
 class AddendumController extends Controller
 {
@@ -37,8 +38,15 @@ class AddendumController extends Controller
      */
     public function store(Incident $incident, StoreAddendumRequest $request)
     {
-
-        $incident->addendums()->create(['description' => $request->get('description')]);
+        if (!$this->captchaValidation( $request)) {
+            return redirect()->withErrors(['validation' => 'captcha falla']);
+        };
+        $addendum = $incident->addendums()->create(['description' => $request->get('description')]);
+        if ($request->hasFile('evidence')) {
+            $file = $request->file('evidence')->storePublicly('evidence/'. $incident->folio );
+            $addendum->evidence_path = $file ;
+            $addendum->save();
+        }
 
         return redirect()->route('incidents.show', ['incident' => $incident]);
     }
@@ -54,37 +62,37 @@ class AddendumController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Addendum  $addendum
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Addendum $addendum)
+    private function captchaValidation( $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAddendumRequest  $request
-     * @param  \App\Models\Addendum  $addendum
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateAddendumRequest $request, Addendum $addendum)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Addendum  $addendum
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Addendum $addendum)
-    {
-        //
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $remoteip = $_SERVER['REMOTE_ADDR'];
+        $data = [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $request->get('recaptcha'),
+            'remoteip' => $remoteip
+        ];
+        $options = [
+            'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            ],
+            'ssl' => [
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $resultJson = json_decode($result);
+        if ($resultJson->success != true) {
+            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        }
+        if ($resultJson->score >= 0.3) {
+            //Validation was successful, add your form submission logic here
+            return true;
+        } else {
+            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        }
     }
 }

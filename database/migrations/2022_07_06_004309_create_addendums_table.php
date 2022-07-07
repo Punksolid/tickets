@@ -18,6 +18,7 @@ class CreateAddendumsTable extends Migration
             $table->id();
             $table->foreignIdFor(Incident::class);
             $table->text('description');
+            $table->text('evidence_path')->nullable();
             $table->timestamps();
         });
     }

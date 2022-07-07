@@ -13,11 +13,13 @@ class AddLatLngGeocodeFieldsToIncidentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('incidents', function (Blueprint $table) {
-            $table->string('lat')->nullable();
-            $table->string('lng')->nullable();
-            $table->string('geocode')->nullable();
-        });
+        if (! Schema::hasColumn('incidents','lat')){
+            Schema::table('incidents', function (Blueprint $table) {
+                $table->string('lat')->nullable();
+                $table->string('lng')->nullable();
+                $table->string('geocode')->nullable();
+            });
+        }
     }
 
     /**
