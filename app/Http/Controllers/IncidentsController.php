@@ -25,7 +25,7 @@ class IncidentsController extends Controller
 
         $incidents = $incidents_query->paginate();
 
-        return view('incidents.index', compact('incidents'));
+        return view('incidents.index', ['incidents' => $incidents]);
     }
 
     public function show(Incident $incident)
@@ -37,7 +37,7 @@ class IncidentsController extends Controller
             $incident->reporte = $this->replaceNamesWithAsterisks($incident->reporte);
         }
 
-        return view('incidents.show', compact('incident'));
+        return view('incidents.show', ['incident' => $incident]);
     }
 
     private function getCookie()
@@ -51,7 +51,7 @@ class IncidentsController extends Controller
         // Create new Goutte client instance with params
         $goutte_client = new Client(HttpClient::create(['headers' => ['X-Requested-With' => 'XMLHttpRequest']]));
 
-        $crawler = $goutte_client->request('POST', 'https://apps.culiacan.gob.mx/070/atencion-ciudadana/reportes/paginacion/0', [
+        $goutte_client->request('POST', 'https://apps.culiacan.gob.mx/070/atencion-ciudadana/reportes/paginacion/0', [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
 
@@ -92,7 +92,7 @@ class IncidentsController extends Controller
 
     private function replacePhoneNumberWithAsterisk($reporte)
     {
-        return preg_replace('/\b[0-9]{6,10}\b/', '**********', $reporte);
+        return preg_replace('/\b\d{6,10}\b/', '**********', $reporte);
     }
 
     private function replaceNamesWithAsterisks($reporte)

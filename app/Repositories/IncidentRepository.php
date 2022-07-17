@@ -7,10 +7,6 @@ use App\Models\Incident;
 class IncidentRepository
 {
 
-    public function __construct()
-    {
-    }
-
     public function getAllByDate()
     {
         if (config('database.default')  === 'sqlite') {

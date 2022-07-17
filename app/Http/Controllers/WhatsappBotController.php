@@ -27,7 +27,7 @@ class WhatsappBotController extends Controller
 
         $twilio = new Client(config('services.twilio.sid'), config('services.twilio.token'));
 
-        $message = $twilio->messages
+        $twilio->getMessages()
             ->create("whatsapp:+5216672067464", // to
                 array(
                     "from" => "whatsapp:+14155238886",
@@ -211,7 +211,5 @@ class WhatsappBotController extends Controller
         if ($citizen['step'] === 2){
             return $this->getOptionsForDepartment($citizen['department_id']);
         }
-
-        return ;
     }
 }

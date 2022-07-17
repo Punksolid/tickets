@@ -33,7 +33,6 @@ class AddendumController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAddendumRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Incident $incident, StoreAddendumRequest $request)
@@ -54,7 +53,6 @@ class AddendumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Addendum  $addendum
      * @return \Illuminate\Http\Response
      */
     public function show(Addendum $addendum)
@@ -84,7 +82,7 @@ class AddendumController extends Controller
         ];
         $context = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
-        $resultJson = json_decode($result);
+        $resultJson = json_decode($result, null, 512, JSON_THROW_ON_ERROR);
         if ($resultJson->success != true) {
             return back()->withErrors(['captcha' => 'ReCaptcha Error']);
         }

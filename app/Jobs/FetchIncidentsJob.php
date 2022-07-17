@@ -57,7 +57,8 @@ class FetchIncidentsJob
     {
 
         $crawler = $this->request();
-        $incidents = $crawler->filter('tbody > tr')->each(function ($node) {
+
+        return $crawler->filter('tbody > tr')->each(function ($node) {
             $asignacion_field = $node->filter('td')->eq(3);
             return [
                 'folio' => $node->filter('td')->eq(10)->filter('a')->attr('data-id-reporte'),
@@ -74,8 +75,6 @@ class FetchIncidentsJob
                 'status' => $asignacion_field->filter('span')->text(),
             ];
         });
-
-        return $incidents;
     }
 
     public function request(): ?Crawler

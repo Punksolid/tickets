@@ -19,16 +19,6 @@ class RegisterIncidentCommand extends Command
     protected $description = 'Create an incident manually from command, emulating chatbot';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return int

@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    /**
+     * @var \App\Repositories\IncidentRepository|mixed
+     */
+    public $incidentsRepository;
     public function __construct()
     {
         $this->incidentsRepository = new IncidentRepository();
@@ -51,19 +55,7 @@ class DashboardController extends Controller
         $aproximado_de_incidentes_con_status_pendiente = Incident::where('status', '=', 'Pendiente')->orWhere('status', 'PENDIENTE')->count();
         $incidents_from_last_24_hours = Incident::where('reported_at', '>=', now()->subDay())->count();
         $last_incident = Incident::orderBy('created_at', 'desc')->first();
-        return view('dashboard.index', compact(
-            'last_incident',
-            'incidents_from_last_24_hours',
-            'incidents',
-            'quantity_of_incidents_by_dependency',
-            'total_reports',
-            'open_incidents_by_dependency',
-            'total_incident_by_status',
-            'total_incidents',
-            'total_geocoded_incidents',
-            'total_de_usuarios_que_han_registrado_incidentes',
-            'aproximado_de_incidentes_con_status_pendiente'
-        ));
+        return view('dashboard.index', ['last_incident' => $last_incident, 'incidents_from_last_24_hours' => $incidents_from_last_24_hours, 'incidents' => $incidents, 'quantity_of_incidents_by_dependency' => $quantity_of_incidents_by_dependency, 'total_reports' => $total_reports, 'open_incidents_by_dependency' => $open_incidents_by_dependency, 'total_incident_by_status' => $total_incident_by_status, 'total_incidents' => $total_incidents, 'total_geocoded_incidents' => $total_geocoded_incidents, 'total_de_usuarios_que_han_registrado_incidentes' => $total_de_usuarios_que_han_registrado_incidentes, 'aproximado_de_incidentes_con_status_pendiente' => $aproximado_de_incidentes_con_status_pendiente]);
     }
 
     public function map()
@@ -90,15 +82,13 @@ class DashboardController extends Controller
             'Dirección de Movilidad' => '#0000FF',
         ];
 
-        $markers = $mapped_incidents->map(function ($item) use ($colors) {
-            return [
-                $item->lat, // 0
-                $item->lng, // 1
-                $item->reporte, // 2
-                $colors[$item->dependencia] ?? '#000000', // 3
-                $item->id // 4
-            ];
-        });
+        $markers = $mapped_incidents->map(fn($item) => [
+            $item->lat, // 0
+            $item->lng, // 1
+            $item->reporte, // 2
+            $colors[$item->dependencia] ?? '#000000', // 3
+            $item->id // 4
+        ]);
 
         return view('dashboard.map', [
             'markers' => $markers->toJson(),
@@ -113,12 +103,10 @@ class DashboardController extends Controller
             ->get();
         $total_incident_by_status = $total_incident_by_status->groupBy('status');
 
-        return $total_incident_by_status->map(function ($item, $key) {
-            return [
-                'total' => $item->sum('total'),
-                'status' => ucfirst(strtolower($item->first()->status))
-            ];
-        });
+        return $total_incident_by_status->map(fn($item, $key) => [
+            'total' => $item->sum('total'),
+            'status' => ucfirst(strtolower((string) $item->first()->status))
+        ]);
     }
 
     private function getFuncionarioConMenosIncidentes()
@@ -129,23 +117,19 @@ class DashboardController extends Controller
             ->get();
 
         $funcionario_con_menos_incidentes = $funcionario_con_menos_incidentes->groupBy('usuario');
-        return $funcionario_con_menos_incidentes->map(function ($item) {
-            return [
-                'total' => $item->sum('total'),
-                'usuario' => $item->first()->usuario
-            ];
-        });
+        return $funcionario_con_menos_incidentes->map(fn($item) => [
+            'total' => $item->sum('total'),
+            'usuario' => $item->first()->usuario
+        ]);
     }
 
     private function getMappedIncidents()
     {
-        return Cache::remember('mapped_incidents', now()->addMinutes(20), function () {
-            return Incident::where('lat', '!=', null)
-                ->where('lat', '!=', 0)
-                ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
-                ->getQuery()
-                ->get();
-        });
+        return Cache::remember('mapped_incidents', now()->addMinutes(20), fn() => Incident::where('lat', '!=', null)
+            ->where('lat', '!=', 0)
+            ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
+            ->getQuery()
+            ->get());
     }
 
 
