@@ -33,7 +33,6 @@ class ReportIncidentTest extends TestCase
          */
         // Call factory of Incident model
         $incident = Incident::factory()->make();
-        dd($incident->toArray());
         $response = $this->post('/incidents', [
             'dependencia' => 'Test Incident',
             'description' => 'Test Description',

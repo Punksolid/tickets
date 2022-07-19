@@ -13,8 +13,8 @@ use Tests\TestCase;
 class IncidentTest extends TestCase
 {
 
-//    use DatabaseTransactions;
-    use DatabaseMigrations;
+    use DatabaseTransactions;
+//    use DatabaseMigrations;
     use WithFaker;
     /**
      * A basic feature test example.
@@ -39,7 +39,7 @@ class IncidentTest extends TestCase
         $call->assertSee('Correo Electrónico');
         $call->assertSee('Estatus');
         $call->assertSee('Mapa');
-        $call->aasertSee('Información adicional');
+        $call->assertSee('Información adicional');
     }
 
 

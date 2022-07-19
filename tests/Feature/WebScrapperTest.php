@@ -30,15 +30,15 @@ class WebScrapperTest extends TestCase
             "folio" => "117257",
             "dependencia" => "Obras Publicas",
             "id_asignacion" => "68632",
-            "prioridad" => "NORMAL",
             "reporte" => "ciudadana solicita con carácter de urgente la reparación de alcantarilla muy hundida, ubicado en blvd. niños héroes entre casi esq. con pres Valsequillo, en la col. las quintas.",
             "ciudadano" => "alma karina calderon angulo",
             "domicilio" => "blvd. niños héroes 2584, LOS ÁNGELES, CP 80014 Culiacán Rosales, México",
-            "servicio" => "Obras Publicas BACHEO Y REENCARPETADO",
+            "servicio" => "BACHEO Y REENCARPETADO",
             "fecha" => "11-April-2022 13:15:43",
             "usuario" => "Bertha Alicia Aispuro Osuna",
             "asignacion" => "se solicita con carácter de urgente la reparación de alcantarilla hundida",
             "status" => "PENDIENTE",
+            'priority' => 'NORMAL'
         ], $result[0]);
 
     }

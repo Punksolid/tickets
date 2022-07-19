@@ -28,7 +28,6 @@ class GeocoderTest extends TestCase
 
         $result = $geocoder->getCoordinatesForAddress($address);
 
-        dd($result);
 
     }
 }

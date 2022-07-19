@@ -11,7 +11,7 @@
             Volver al listado
         </a>
         {{-- open link in new tab --}}
-        <a href="https://apps.culiacan.gob.mx/070/consultar/{{ $incident->folio }}" class="btn btn-primary"
+        <a href="https://apps.culiacan.gob.mx/ciudadano/consultar/{{ $incident->folio }}" class="btn btn-primary"
            target="_blank">
             <i class="fa fa-address-book"></i>
             Ver Plataforma Anterior
