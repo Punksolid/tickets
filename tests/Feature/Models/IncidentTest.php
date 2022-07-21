@@ -21,7 +21,7 @@ class IncidentTest extends TestCase
      *
      * @return void
      */
-    public function test_it_can_show_an_incident_detail()
+    public function test_it_can_show_an_incident_detail(): void
     {
         $incident_details_to_show_privately = Incident::factory()->create();
 
@@ -62,8 +62,11 @@ class IncidentTest extends TestCase
      *
      * @return void
      */
-    public function test_query_open_incidents_by_dependency()
+    public function test_query_open_incidents_by_dependency(): void
     {
+        $existing_incident_with_dependencia_alumbrado_publico = Incident::where('dependencia', 'Alumbrado Público')->count();
+        $existing_incident_with_dependencia_banquetas = Incident::where('dependencia', 'Banquetas')->count();
+
         Incident::factory()->count(5)->create([
             'dependencia' => 'Alumbrado Público',
             'status' => 'PENDIENTE'
@@ -99,13 +102,15 @@ class IncidentTest extends TestCase
                 'dependencia' => $item->first()->dependencia
             ];
         });
-
-        $this->assertEquals(6, $open_incidents_by_dependency['Alumbrado Público']['total']);
-        $this->assertEquals(11, $open_incidents_by_dependency['Banquetas']['total']);
+        $this->assertEquals($existing_incident_with_dependencia_alumbrado_publico + 6, $open_incidents_by_dependency['Alumbrado Público']['total']);
+        $this->assertEquals($existing_incident_with_dependencia_banquetas + 11, $open_incidents_by_dependency['Banquetas']['total']);
     }
 
     public function test_total_incident_by_status()
     {
+        $existing_incident_with_status_pendiente = Incident::where('status', 'PENDIENTE')->count();
+        $existing_incident_with_status_atendido = Incident::where('status', 'ATENDIDO')->count();
+
         Incident::factory()->count(5)->create([
             'status' => 'PENDIENTE'
         ]);
@@ -127,7 +132,7 @@ class IncidentTest extends TestCase
             ];
         });
 
-        $this->assertEquals(5, $total_incident_by_status['PENDIENTE']['total']);
-        $this->assertEquals(15, $total_incident_by_status['ATENDIDO']['total']);
+        $this->assertEquals($existing_incident_with_status_pendiente + 5, $total_incident_by_status['PENDIENTE']['total']);
+        $this->assertEquals($existing_incident_with_status_atendido + 15, $total_incident_by_status['ATENDIDO']['total']);
     }
 }

@@ -60,10 +60,11 @@ class AddendumController extends Controller
         //
     }
 
-    private function captchaValidation( $request)
+    protected function captchaValidation( $request)
     {
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
+
         $data = [
             'secret' => config('services.recaptcha.secret_key'),
             'response' => $request->get('recaptcha'),

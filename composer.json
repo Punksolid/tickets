@@ -21,7 +21,8 @@
         "maatwebsite/excel": "^3.1",
         "spatie/geocoder": "^3.12",
         "twilio/sdk": "^6.36",
-        "web3p/web3.php": "dev-master"
+        "web3p/web3.php": "dev-master",
+        "laravel/telescope": "v4.9.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

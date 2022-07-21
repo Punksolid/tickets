@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Incident;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,6 +16,9 @@ use Web3\Web3;
 
 class WhatsappBotControllerTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     const ABI = <<<JSON
 {"abi": [
 		{
@@ -112,16 +117,14 @@ JSON;
 
         foreach ($body as $value) {
             $whatsapp_incoming_message['Body'] = $value;
-            $response = $this->post(route('bot-whatsapp.response-bot'), $whatsapp_incoming_message);
-//            dump($response->getContent());
+            $this->post(route('bot-whatsapp.response-bot'), $whatsapp_incoming_message);
 //            $response->assertStatus(200);
         }
         // Assert database has at least this values in a record
-
         $this->assertDatabaseHas('incidents', [
-            'description' => 'Alumbrado Publico',
+            'dependencia' => 'Alumbrado Publico',
             'reporte' => 'Se fundio un foco',
-            'ciudadano' => 'whatsapp => +14155238886',
+            'ciudadano' => 'Jose Manuel',
             'domicilio' => 'Alvaro Obregon 2050, Col. Centro, Culiacan, Sinaloa.',
         ]);
 

@@ -23,7 +23,7 @@ class AddendumTest extends TestCase
         $ticket = Incident::factory()->create( );
         $description = $this->faker->text;
 
-        $call = $this->post(route('addendums.store', ['incident' => $ticket->id]), [
+        $call = $this->post(route('incidents.addendums.store', ['incident' => $ticket->id]), [
             'description' => $description
         ]);
 

@@ -23,6 +23,7 @@ Route::get('/', function () {
     return redirect()->route('map');
 });
 Route::get('/incidents', [IncidentsController::class, 'index'])->name('incidents.index');
+Route::post('/incidents', [IncidentsController::class, 'store'])->name('incidents.store');
 Route::get('/incidents/{incident}', [IncidentsController::class, 'show'])->name('incidents.show');
 Route::resource('/incidents/{incident}/addendums', AddendumController::class)->names('incidents.addendums');
 // Dashboard
