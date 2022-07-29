@@ -16,13 +16,13 @@
         "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
+        "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "maatwebsite/excel": "^3.1",
         "spatie/geocoder": "^3.12",
         "twilio/sdk": "^6.36",
-        "web3p/web3.php": "dev-master",
-        "laravel/telescope": "v4.9.1"
+        "web3p/web3.php": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
