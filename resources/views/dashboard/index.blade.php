@@ -19,7 +19,11 @@
                 <span class="info-box-icon bg-info"><i class="fas fa-sync-alt"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Ultima sincronización</span>
-                    <span class="info-box-number">{{ $last_incident->created_at->diffForHumans() }}</span>
+                    @if($last_incident)
+                        <span class="info-box-number">{{ $last_incident->created_at->diffForHumans() }}</span>
+                    @else
+                        <span class="info-box-number">No hay incidentes</span>
+                    @endif
                 </div>
             </div>
         </div>

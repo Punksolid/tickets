@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\IncidentRequest;
+use App\Jobs\MapService;
 use App\Models\Incident;
+use App\Services\RegisterNewIncidentInCuliacan;
 use Goutte\Client;
 use Illuminate\Http\Request;
+use Monolog\Logger;
 use Symfony\Component\HttpClient\HttpClient;
 
 
@@ -28,8 +32,13 @@ class IncidentsController extends Controller
         return view('incidents.index', ['incidents' => $incidents]);
     }
 
-    public function show(Incident $incident)
+    public function show( $incident_folio)
     {
+
+        $incident = Incident::where('folio', $incident_folio)->first();
+        if (!$incident) {
+            $incident = new Incident() ;
+        }
         if (! auth()->check()) {
             $incident->ciudadano = null;
             // check if there is a phone number in $incient->reporte
@@ -141,4 +150,44 @@ class IncidentsController extends Controller
 
         return $reporte;
     }
+
+    public function create()
+    {
+        $services_types = MapService::getServiceTypesNames();
+
+        return view('incidents.create', [
+            'services_types' => $services_types,
+        ]);
+    }
+
+    public function store(IncidentRequest $request)
+    {
+        $service_id = (new MapService())->getServiceIdBySubserviceId($request->get('service_type_id'));
+        $register_new_incident_in_culiacan = new RegisterNewIncidentInCuliacan();
+        try {
+            $culiacan_government_incident_folio = $register_new_incident_in_culiacan->__invoke(
+                $service_id,
+                $request->service_type_id,
+                $request->report_message,
+                $request->neighborhood_id,
+                $request->street_name,
+                $request->postal_code
+            );
+
+        } catch (\Exception $e) {
+            Logger::error($e->getMessage(), [
+                'service_id' => $service_id,
+                'service_type_id' => $request->service_type_id,
+                'report_message' => $request->report_message,
+                'neighborhood_id' => $request->neighborhood_id,
+                'street_name' => $request->street_name,
+                'postal_code' => $request->postal_code,
+            ]);
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect(config('services.the_url') . '/consultar/' . $culiacan_government_incident_folio);
+    }
+
 }

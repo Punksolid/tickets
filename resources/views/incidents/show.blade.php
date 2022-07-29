@@ -55,7 +55,7 @@
                         </div>
                         <div class="col-md-12">
                             <label>Creado hace <i class="fa fa-times-circle-o"></i> </label>
-                            <p>{{ $incident->fecha->diffForHumans() }} | {{ $incident->fecha }}</p>
+                            <p>{{ optional($incident->fecha)->diffForHumans() }} | {{ $incident->fecha }}</p>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                         @endforeach
                         </div>
 
-                        <form method="post" action="{{  route('incidents.addendums.store', ['incident' => $incident])   }}" enctype="multipart/form-data">
+                        <form method="post" action="{{  route('incidents.addendums.store', ['incident' => 0])   }}" enctype="multipart/form-data">
                             @csrf
                             <label for="description">Información Adicional</label>
                             <textarea class="form-control" name="description"></textarea>
