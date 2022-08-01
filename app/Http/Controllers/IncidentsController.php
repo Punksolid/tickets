@@ -174,8 +174,8 @@ class IncidentsController extends Controller
                 $request->postal_code
             );
 
-        } catch (\Exception $e) {
-            Logger::error($e->getMessage(), [
+        } catch (\Exception $exception) {
+            \logger()->info($exception->getMessage(), [
                 'service_id' => $service_id,
                 'service_type_id' => $request->service_type_id,
                 'report_message' => $request->report_message,
@@ -184,7 +184,7 @@ class IncidentsController extends Controller
                 'postal_code' => $request->postal_code,
             ]);
 
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->withErrors($exception->getMessage())->withInput();
         }
 
         return redirect(config('services.the_url') . '/consultar/' . $culiacan_government_incident_folio);
