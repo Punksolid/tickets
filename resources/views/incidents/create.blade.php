@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Mapa de Incidentes')
+@section('title', 'Nuevo Reporte')
 
 @section('content_header')
     <h1>Registra un Reporte al Ayuntamiento de Culiacan.</h1>
@@ -13,6 +13,17 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
+{{--                    error block --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
 {{--                    crea nuevo formulario--}}
                     <form action="{{ route('incidents.store') }}" method="POST">
                         @csrf
@@ -21,7 +32,7 @@
                             <select class="form-control select2-blue @error('service_type_id') is-invalid @enderror" id="service_type_id" name="service_type_id">
                                 <option value="">Selecciona un tipo de servicio</option>
                                 @foreach($services_types as $key => $service_type_name)
-                                    <option value="{{ $key }}">{{ $service_type_name }}</option>
+                                    <option value="{{ $key }}" @if($key == old('service_type_id')) selected="selected" @endif >{{ $service_type_name }}</option>
                                 @endforeach
                             </select>
                             @error('service_type_id')

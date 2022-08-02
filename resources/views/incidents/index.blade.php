@@ -44,14 +44,14 @@
                             <tbody>
                                 @forelse($incidents as $incident)
                                     <tr>
-{{--                                        <td>{{ $incident->id }}</td>--}}
+                                        <td>{{ $incident->folio }}</td>
                                         <td>{{ $incident->folio }}</td>
                                         <td>{{ substr($incident->reporte, 0, 50) }}...</td>
                                         <td>{{ substr($incident->domicilio, 0, 50) }}...</td>
                                         <td><p class="badge {{ $incident->status == 'ATENDIDO' ? 'badge-success': 'badge-info' }}">{{ $incident->status }}</p></td>
                                         <td>{{ $incident->fecha->diffForHumans() }}</td>
                                         <td>
-                                            <a href="{{ route('incidents.show', $incident->id) }}" class="btn btn-info btn-sm">
+                                            <a href="{{ route('incidents.show', $incident->folio) }}" class="btn btn-info btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>

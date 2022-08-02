@@ -13,7 +13,7 @@ class MapService
 {
 
     final public const SERVICE_NAMES_IDS = [
-        1 => [
+        "1" => [
             'name' => 'Alumbrado Público',
             'subservices' => [
                 ["id_tipo_servicio" => "4", "nombre_tipo_servicio" => "INSTALACIÓN DE ARBOTANTES"],
@@ -22,7 +22,7 @@ class MapService
                 ["id_tipo_servicio" => "2", "nombre_tipo_servicio" => "REPARACIÓN DE LAMPARAS"]
             ]
         ],
-        2 => [
+        "2" => [
             'name' => 'Aseo y Limpia',
             'subservices' => [
                 ["id_tipo_servicio" => "9", "nombre_tipo_servicio" => "BARRIDO MECÁNICO"],
@@ -30,7 +30,7 @@ class MapService
                 ["id_tipo_servicio" => "7", "nombre_tipo_servicio" => "RETIRO DE ANIMALES MUERTOS"]
             ],
         ],
-        3 => [
+        "3" => [
             'name' => 'Obras Publicas',
             'subservices' => [
                 ["id_tipo_servicio" => "14", "nombre_tipo_servicio" => "* BACHES"],
@@ -48,20 +48,20 @@ class MapService
                 ["id_tipo_servicio" => "49", "nombre_tipo_servicio" => "REPARACIÓN DE CALLES Y CAMINOS EMPEDRADOS"]
             ],
         ],
-        4 => [
+        "4" => [
             'name' => 'Fugas de Agua',
             'subservices' => [
                 ["id_tipo_servicio" => "25", "nombre_tipo_servicio" => "DRENAJE"],
                 ["id_tipo_servicio" => "21", "nombre_tipo_servicio" => "FUGAS DE AGUA"]]
         ],
-        6 => [
+        "6" => [
             'name' => 'Lotes Baldios',
             'subservices' => [
                 ["id_tipo_servicio" => "31", "nombre_tipo_servicio" => "Verificacion de Casas Abandonadas"],
                 ["id_tipo_servicio" => "30", "nombre_tipo_servicio" => "Verificacion de lotes", "plantilla" => ""]
             ]
         ],
-        7 => [
+        "7" => [
             'name' => 'Parques y Jardines',
             'subservices' => [
                 ["id_tipo_servicio" => "33", "nombre_tipo_servicio" => "Despeje de Luminarias"],
@@ -74,7 +74,7 @@ class MapService
                 ["id_tipo_servicio" => "43", "nombre_tipo_servicio" => "Retiro de Basura de Parques"]
             ]
         ],
-        8 => [
+        "8" => [
             'name' => 'Inspeccion y Vigilancia',
             'subservices' => [
                 ["id_tipo_servicio" => "38", "nombre_tipo_servicio" => "Chequeo de Ganado Vago"],
@@ -83,7 +83,7 @@ class MapService
                 ["id_tipo_servicio" => "37", "nombre_tipo_servicio" => "Supervision de Vendedores Ambulantes en Via Publica"]
             ]
         ],
-        9 => [
+        "9" => [
             'name' => 'Seguridad Publica',
             'subservices' => [
                 ["id_tipo_servicio" => "39", "nombre_tipo_servicio" => "Inspeccion de Carros Abandonados"],
@@ -91,13 +91,13 @@ class MapService
                 ["id_tipo_servicio" => "40", "nombre_tipo_servicio" => "Rondines policiacos"]
             ]
         ],
-        10 => [
+        "10" => [
             'name' => 'Denuncias Administrativas',
             'subservices' => [
                 ["id_tipo_servicio" => "45", "nombre_tipo_servicio" => "Denuncia"]
             ]
         ],
-        12 => [
+        "12" => [
             'name' => 'Drenajes y Sistemas Pluviales',
             'subservices' => [
                 ["id_tipo_servicio" => "52", "nombre_tipo_servicio" => "DESAZOLVE DE LAGUNAS"],
@@ -110,7 +110,7 @@ class MapService
             ]
         ],
 
-        13 => [
+        "13" => [
             'name' => 'Dirección de Movilidad',
             'subservices' => [
                 ["id_tipo_servicio" => "60","nombre_tipo_servicio" => "Instalación de Boyas en V\u00edas P\u00fablicas"],
@@ -135,7 +135,7 @@ class MapService
 
     }
 
-    public function getServiceIdBySubserviceId(int $subservice_id): int
+    public function getServiceIdBySubserviceId(int $subservice_id): string
     {
         foreach (self::SERVICE_NAMES_IDS as $key => $department) {
             foreach ($department['subservices'] as $subservice) {

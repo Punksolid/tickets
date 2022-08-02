@@ -6,6 +6,7 @@ use App\Jobs\FetchAndScrapMulta;
 use Doctrine\DBAL\Query\QueryException;
 use Exception;
 use Illuminate\Console\Command;
+use Symfony\Component\HttpClient\Exception\TimeoutException;
 
 class ProcessMulta extends Command
 {
@@ -52,8 +53,26 @@ class ProcessMulta extends Command
             }
         }
         // create progress bar
-        $bar = $this->output->createProgressBar(count(range($start, $end)));
-        foreach (range($start, $end) as $folio) {
+        $range = range($start, $end);
+        $bar = $this->output->createProgressBar(count($range));
+        $bar->setFormat("%message%\nFPS:%fps%\n%current%/%max% [%bar%] %percent:3s%%");
+        // Calculate folios per second
+        $time = time();
+        $folios_per_second = 0;
+        $folios_per_second_count = 0;
+        foreach ($range as $folio) {
+            $folios_per_second_count++;
+            // print  every 10 seconds
+            if (time() - $time > 10) {
+                // count folios per second
+                $folios_per_second = $folios_per_second_count / (time() - $time);
+                $time = time();
+                $folios_per_second_count = 0;
+            }
+            $bar->setMessage( (int)$folios_per_second, 'fps');
+
+
+            $bar->setMessage('Processing folio ' . $folio);
             $bar->advance();
             if ($debug) {
                 $this->info('Processing folio ' . $folio);
@@ -62,6 +81,8 @@ class ProcessMulta extends Command
                 FetchAndScrapMulta::dispatch($folio);
             } catch (\InvalidArgumentException $exception) {
                 logger()->warning('Error processing folio ' . $folio . "a node is not existing", [$exception->getMessage(), $exception->getTrace()]);
+            } catch (TimeoutException $exception) {
+                logger()->warning('Error processing folio Timeout' . $folio , [$exception->getMessage()]);
             }
         }
         $bar->finish();

@@ -81,7 +81,7 @@ class FetchIncidentsJob
     {
         $goutte_client = new Client(HttpClient::create(['headers' => ['X-Requested-With' => 'XMLHttpRequest']]));
         $end_elements_of_page = $this->page * 20;
-        $url = config('services.the_url').$end_elements_of_page;
+        $url = config('services.the_url').'/atencion-ciudadana/reportes/paginacion/'.$end_elements_of_page;
 
         return $goutte_client->request('POST', $url, [
             'X-Requested-With' => 'XMLHttpRequest'
