@@ -7,10 +7,7 @@ use App\Http\Requests\IncidentRequest;
 use App\Jobs\MapService;
 use App\Models\Incident;
 use App\Services\RegisterNewIncidentInCuliacan;
-use Goutte\Client;
 use Illuminate\Http\Request;
-use Monolog\Logger;
-use Symfony\Component\HttpClient\HttpClient;
 
 
 class IncidentsController extends Controller

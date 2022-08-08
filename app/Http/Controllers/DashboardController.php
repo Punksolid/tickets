@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incident;
+use App\Models\Multa;
 use App\Repositories\IncidentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -55,7 +56,22 @@ class DashboardController extends Controller
         $aproximado_de_incidentes_con_status_pendiente = Incident::where('status', '=', 'Pendiente')->orWhere('status', 'PENDIENTE')->count();
         $incidents_from_last_24_hours = Incident::where('reported_at', '>=', now()->subDay())->count();
         $last_incident = Incident::orderBy('created_at', 'desc')->first();
-        return view('dashboard.index', ['last_incident' => $last_incident, 'incidents_from_last_24_hours' => $incidents_from_last_24_hours, 'incidents' => $incidents, 'quantity_of_incidents_by_dependency' => $quantity_of_incidents_by_dependency, 'total_reports' => $total_reports, 'open_incidents_by_dependency' => $open_incidents_by_dependency, 'total_incident_by_status' => $total_incident_by_status, 'total_incidents' => $total_incidents, 'total_geocoded_incidents' => $total_geocoded_incidents, 'total_de_usuarios_que_han_registrado_incidentes' => $total_de_usuarios_que_han_registrado_incidentes, 'aproximado_de_incidentes_con_status_pendiente' => $aproximado_de_incidentes_con_status_pendiente]);
+        $top_plates = $this->getTopPlates();
+
+        return view('dashboard.index', [
+            'last_incident' => $last_incident,
+            'incidents_from_last_24_hours' => $incidents_from_last_24_hours,
+            'incidents' => $incidents,
+            'quantity_of_incidents_by_dependency' => $quantity_of_incidents_by_dependency,
+            'total_reports' => $total_reports,
+            'open_incidents_by_dependency' => $open_incidents_by_dependency,
+            'total_incident_by_status' => $total_incident_by_status,
+            'total_incidents' => $total_incidents,
+            'total_geocoded_incidents' => $total_geocoded_incidents,
+            'total_de_usuarios_que_han_registrado_incidentes' => $total_de_usuarios_que_han_registrado_incidentes,
+            'aproximado_de_incidentes_con_status_pendiente' => $aproximado_de_incidentes_con_status_pendiente,
+            'top_plates' => $top_plates,
+        ]);
     }
 
     public function map()
@@ -130,6 +146,17 @@ class DashboardController extends Controller
             ->select('id', 'lat', 'lng', 'reporte', 'dependencia')
             ->getQuery()
             ->get());
+    }
+
+    private function getTopPlates()
+    {
+        return  Multa::groupBy('placa')
+            ->where('placa', '!=', '')
+            ->select(DB::raw('count(*) as total, placa'))
+            ->take(10)
+            ->orderBy('total', 'desc')
+            ->get();
+
     }
 
 

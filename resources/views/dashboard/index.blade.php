@@ -20,7 +20,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">Ultima sincronización</span>
                     @if($last_incident)
-                        <span class="info-box-number">{{ $last_incident->created_at->diffForHumans() }}</span>
+                        <span class="info-box-number">{{ optional($last_incident->created_at)->diffForHumans() }}</span>
                     @else
                         <span class="info-box-number">No hay incidentes</span>
                     @endif
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-2 col-5">
 
             <div class="small-box bg-info">
                 <div class="inner">
@@ -39,11 +39,12 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="{{ route('incidents.index') }}" class="small-box-footer">Ver<i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('incidents.index') }}" class="small-box-footer">Ver<i
+                        class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-2 col-5">
 
             <div class="small-box bg-success">
                 <div class="inner">
@@ -53,11 +54,12 @@
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{{ route('incidents.index',['geocoded' => true ]) }}" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('incidents.index',['geocoded' => true ]) }}" class="small-box-footer"><i
+                        class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-5">
 
             <div class="small-box bg-warning">
                 <div class="inner">
@@ -71,12 +73,25 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-5">
 
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>{{ $aproximado_de_incidentes_con_status_pendiente }}</h3>
                     <p>Aproximado de Incidentes con Status Pendiente</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">-</a>
+            </div>
+        </div>
+        <div class="col-lg-2 col-5">
+
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $aproximado_de_incidentes_con_status_pendiente }}</h3>
+                    <p>Multas Indexadas</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
@@ -200,9 +215,9 @@
                         <canvas id="dependencias" style="display: block;"></canvas>
                     </div>
                     <div class="d-flex flex-row justify-content-end">
-<span class="mr-2">
-<i class="fas fa-square text-primary"></i> This year
-</span>
+                        <span class="mr-2">
+                        <i class="fas fa-square text-primary"></i> This year
+                        </span>
                         <span>
 <i class="fas fa-square text-gray"></i> Last year
 </span>
@@ -214,7 +229,45 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+{{--    new panel --}}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Placas con más multas de tránsito</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+{{--                10 registries with two columns --}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Placa</th>
+                                <th>Multas</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($top_plates as $plate)
+                                <tr>
+                                    <td>{{ $plate->placa }}</td>
+                                    <td>{{ $plate->total }}</td>
+                                </tr>
+                            @empty
+                                <span class="text-muted">No hay registros</span>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
