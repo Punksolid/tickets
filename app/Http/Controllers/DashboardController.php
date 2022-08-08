@@ -57,6 +57,7 @@ class DashboardController extends Controller
         $incidents_from_last_24_hours = Incident::where('reported_at', '>=', now()->subDay())->count();
         $last_incident = Incident::orderBy('created_at', 'desc')->first();
         $top_plates = $this->getTopPlates();
+        $total_indexed_multas = Multa::count();
 
         return view('dashboard.index', [
             'last_incident' => $last_incident,
@@ -71,6 +72,7 @@ class DashboardController extends Controller
             'total_de_usuarios_que_han_registrado_incidentes' => $total_de_usuarios_que_han_registrado_incidentes,
             'aproximado_de_incidentes_con_status_pendiente' => $aproximado_de_incidentes_con_status_pendiente,
             'top_plates' => $top_plates,
+            'total_indexed_multas' => $total_indexed_multas
         ]);
     }
 

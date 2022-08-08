@@ -90,7 +90,7 @@
 
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>{{ $aproximado_de_incidentes_con_status_pendiente }}</h3>
+                    <h3>{{ $total_indexed_multas }}</h3>
                     <p>Multas Indexadas</p>
                 </div>
                 <div class="icon">
