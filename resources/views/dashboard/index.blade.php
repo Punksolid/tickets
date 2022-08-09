@@ -254,7 +254,7 @@
                             <tbody>
                             @forelse($top_plates as $plate)
                                 <tr>
-                                    <td>{{ $plate->placa }}</td>
+                                    <td>{{  substr_replace($plate->placa, '*', 3, -3) }}</td>
                                     <td>{{ $plate->total }}</td>
                                 </tr>
                             @empty
