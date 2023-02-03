@@ -264,7 +264,42 @@
                         </table>
                     </div>
                 </div>
-
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Multas Más Comunes</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Concepto</th>
+                                <th>Cantidad de Multas</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($top_multas_types as $concepto)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $concepto->descripcion }}</td>
+                                    <td>{{ $concepto->total }}</td>
+                                </tr>
+                            @empty
+                                <span class="text-muted">No hay registros</span>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
              '--sync' => true,
              'start_page' => 0,
          ])->hourly();
+
+        $schedule->command('telescope:prune')->daily();
     }
 
     /**

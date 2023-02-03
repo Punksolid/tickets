@@ -47,10 +47,8 @@ class ProcessMulta extends Command
         $end = $this->option('end');
         $debug = $this->option('debug');
         // validate start and end
-        if ($start && $end) {
-            if ($start > $end) {
-                throw new Exception('Start must be less than end');
-            }
+        if ($start && $end && $start > $end) {
+            throw new Exception('Start must be less than end');
         }
         // create progress bar
         $range = range($start, $end);

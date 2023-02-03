@@ -14,7 +14,7 @@ class TicketsFetch extends Command
      * @var string
      */
     // Add boolean to indicate if we should fetch all incidents or just new ones
-    protected $signature = 'tickets:fetch {start_page} {--sync}';
+    protected $signature = 'tickets:fetch {start_page} {--sync : It will only fetch the new incidents.}';
 
     /**
      * The console command description.

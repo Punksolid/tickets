@@ -32,7 +32,7 @@ class FetchAndScrapMulta
      */
     public function handle(): void
     {
-        if (Multa::where('folio', 'J'.$this->folio)->exists()) {
+        if (Multa::where('folio', 'K'.$this->folio)->exists()) {
             return;
         }
         // make request
@@ -55,7 +55,7 @@ class FetchAndScrapMulta
     public function request($folio_multa): Crawler
     {
         $client = new Client();
-        return $client->request('GET', 'https://pagos.culiacan.gob.mx/multas-transito/J'. $folio_multa);
+        return $client->request('GET', 'https://pagos.culiacan.gob.mx/multas-transito/K'. $folio_multa);
     }
 
     public function scrap(Crawler $crawler): array

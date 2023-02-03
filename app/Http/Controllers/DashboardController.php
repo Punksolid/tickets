@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Concepto;
 use App\Models\Incident;
 use App\Models\Multa;
 use App\Repositories\IncidentRepository;
@@ -72,6 +73,7 @@ class DashboardController extends Controller
             'total_de_usuarios_que_han_registrado_incidentes' => $total_de_usuarios_que_han_registrado_incidentes,
             'aproximado_de_incidentes_con_status_pendiente' => $aproximado_de_incidentes_con_status_pendiente,
             'top_plates' => $top_plates,
+            'top_multas_types' => $this->getTopMultasConceptos(),
             'total_indexed_multas' => $total_indexed_multas
         ]);
     }
@@ -107,7 +109,6 @@ class DashboardController extends Controller
             $colors[$item->dependencia] ?? '#000000', // 3
             $item->id // 4
         ]);
-
         return view('dashboard.map', [
             'markers' => $markers->toJson(),
         ]);
@@ -156,6 +157,17 @@ class DashboardController extends Controller
             ->where('placa', '!=', '')
             ->select(DB::raw('count(*) as total, placa'))
             ->take(10)
+            ->orderBy('total', 'desc')
+            ->get();
+
+    }
+
+    private function getTopMultasConceptos()
+    {
+        // Get all Concepto grouped by descripcion
+        return Concepto::groupBy('descripcion')
+            ->select(DB::raw('count(*) as total, descripcion'))
+//            ->take(10)
             ->orderBy('total', 'desc')
             ->get();
 

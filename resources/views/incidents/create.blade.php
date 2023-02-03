@@ -25,7 +25,7 @@
                     @endif
 
 {{--                    crea nuevo formulario--}}
-                    <form action="{{ route('incidents.store') }}" method="POST">
+                    <form id="create_incident" method="POST" action="https://apps.culiacan.gob.mx/ciudadano/reportes/registrar_reporte">
                         @csrf
                         <div class="form-group">
                             <label for="category_id">Tipo de servicio</label>
@@ -42,7 +42,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="description">Descripción</label>
+                            <label for="report_message">Descripción</label>
                             <textarea class="form-control @error('report_message') is-invalid @enderror" id="report_message" name="report_message" rows="3">{{ old('report_message') }}</textarea>
                             @if($errors->has('report_message'))
                                 @foreach($errors->get('report_message') as $error)
@@ -51,7 +51,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="location">Colonia</label>
+                            <label for="neighborhood_id">Colonia</label>
                             <select class="form-control select2-blue" id="neighborhood_id" name="neighborhood_id">
                                 <option selected="selected" value="">Seleccione</option>
                                 <option value="1930">CENTRO</option>
@@ -815,5 +815,97 @@
         $(document).ready(function() {
             $('.select2-blue').select2();
         });
+        // submit via XHRequest
+{{--        $('#create_incident').submit(function(e) {--}}
+{{--            e.preventDefault();--}}
+{{--/*--}}
+{{--            string  $service_id,--}}
+{{--            string  $service_type,--}}
+{{--            string  $report_message,--}}
+{{--            string  $colonia,--}}
+{{--            string  $street,--}}
+{{--            ?string $postal_code--}}
+{{-- */--}}
+{{--            // declare the above variables--}}
+{{--            let service_id = document.getElementById('service_type_id').value;--}}
+{{--            let service_type = document.getElementById('service_type_id').value;--}}
+{{--            let report_message = document.getElementById('report_message').value;--}}
+{{--            let colonia = document.getElementById('neighborhood_id').value;--}}
+{{--            let street = document.getElementById('street_name').value;--}}
+{{--            let postal_code = document.getElementById('postal_code').value;--}}
+
+{{--            console.log(service_id, service_type, report_message, colonia, street, postal_code);--}}
+
+{{--            var myHeaders = new Headers();--}}
+{{--            myHeaders.append("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0");--}}
+{{--            myHeaders.append("Accept", "*/*");--}}
+{{--            myHeaders.append("Accept-Language", "en-US,en;q=0.5");--}}
+{{--            myHeaders.append("Accept-Encoding", "gzip, deflate, br");--}}
+{{--            myHeaders.append("X-Requested-With", "XMLHttpRequest");--}}
+{{--            myHeaders.append("Origin", "https://apps.culiacan.gob.mx");--}}
+{{--            myHeaders.append("Connection", "keep-alive");--}}
+{{--            myHeaders.append("Referer", "https://apps.culiacan.gob.mx/ciudadano/reportar");--}}
+{{--            myHeaders.append("Cookie", "ventanillaactiva=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%22fb8612789c72d17072d57c1eb6a1a6b0%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A15%3A%22187.145.104.196%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A70%3A%22Mozilla%2F5.0+%28X11%3B+Linux+x86_64%3B+rv%3A103.0%29+Gecko%2F20100101+Firefox%2F103.0%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1659067237%3Bs%3A9%3A%22user_data%22%3Bs%3A0%3A%22%22%3B%7Df4526f4d061767aabe57960f1e16a918; _ga=GA1.3.505146067.1659060468; _gid=GA1.3.1622479335.1659060468");--}}
+{{--            myHeaders.append("Sec-Fetch-Dest", "empty");--}}
+{{--            myHeaders.append("Sec-Fetch-Mode", "cors");--}}
+{{--            myHeaders.append("Sec-Fetch-Site", "same-origin");--}}
+{{--            myHeaders.append("TE", "trailers");--}}
+
+{{--            var formdata = new FormData();--}}
+{{--            formdata.append("servicio", service_id);--}}
+{{--            formdata.append("tipo_servicio", service_type);--}}
+{{--            formdata.append("reporte", report_message);--}}
+{{--            formdata.append("calle", street);--}}
+{{--            formdata.append("numero", "0'0");--}}
+{{--            formdata.append("id_colonia", colonia);--}}
+{{--            formdata.append("codigo_postal", postal_code);--}}
+{{--            formdata.append("nombreId", "');");--}}
+{{--            formdata.append("nombre", "anonimo");--}}
+{{--            formdata.append("domicilio", "");--}}
+{{--            formdata.append("correo", "test@test.com");--}}
+{{--            formdata.append("telefono", "6666666666");--}}
+{{--            formdata.append("celular", "6666666666");--}}
+{{--            formdata.append("nombreId", "");--}}
+{{--            formdata.append("denuncia_nombre", "");--}}
+{{--            formdata.append("denuncia_domicilio", "eee");--}}
+{{--            formdata.append("denuncia_originario", "");--}}
+{{--            formdata.append("denuncia_nacionalidad", "");--}}
+{{--            formdata.append("denuncia_telefono", "");--}}
+{{--            formdata.append("denuncia_escolaridad", "");--}}
+{{--            formdata.append("denuncia_edad", "0");--}}
+{{--            formdata.append("denuncia_sexo", "");--}}
+{{--            formdata.append("denuncia_ocupacion", "");--}}
+{{--            formdata.append("denuncia_estado_civil", "");--}}
+{{--            formdata.append("denuncia_correo", "");--}}
+{{--            formdata.append("denuncia_rfc", "");--}}
+{{--            formdata.append("denunciado_nombre", "");--}}
+{{--            formdata.append("denunciado_domicilio", "");--}}
+{{--            formdata.append("denunciado_cargo", "");--}}
+{{--            formdata.append("denunciado_razon_social", "");--}}
+{{--            formdata.append("denuncia_hechos", "");--}}
+{{--            formdata.append("denuncia_medios", "no");--}}
+{{--            formdata.append("denuncia_publicas_url", "");--}}
+{{--            formdata.append("denuncia_privadas_url", "");--}}
+{{--            formdata.append("testigo_existe", "0");--}}
+{{--            formdata.append("denuncia_informacion_url", "");--}}
+{{--            formdata.append("denuncia_otros", "");--}}
+{{--            formdata.append("latitud", "");--}}
+{{--            formdata.append("longitud", "");--}}
+{{--            formdata.append("testigo_nombre", "");--}}
+{{--            formdata.append("testigo_domicilio", "");--}}
+{{--            formdata.append("testigo_telefono", "");--}}
+
+{{--            var requestOptions = {--}}
+{{--                method: 'POST',--}}
+{{--                headers: myHeaders,--}}
+{{--                body: formdata,--}}
+{{--                redirect: 'follow'--}}
+{{--            };--}}
+{{--            --}}{{--action="{{ route('incidents.store') }}"--}}
+{{--            fetch("https://apps.culiacan.gob.mx/ciudadano/ciudadano/reportes/registrar_reporte", requestOptions)--}}
+{{--                .then(response => response.text())--}}
+{{--                .then(result => console.log(result))--}}
+{{--                .catch(error => console.log('error', error));--}}
+{{--        });--}}
     </script>
 @stop
